@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Menu, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { HagensLogo } from './hagens-logo';
+import { gsap } from 'gsap';
 
 const navLinks = [
   { href: '#servicos', label: 'Serviços / Produtos' },
@@ -16,6 +17,24 @@ const navLinks = [
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (navRef.current) {
+      gsap.fromTo(
+        '.nav-link-item',
+        { opacity: 0, y: -20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.15,
+          ease: 'power3.out',
+          delay: 0.5, // Delay to start after page load
+        }
+      );
+    }
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-background/95 backdrop-blur-sm">
@@ -24,12 +43,12 @@ export default function Header() {
           <HagensLogo className="h-7" />
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav ref={navRef} className="hidden items-center gap-8 md:flex">
           {navLinks.map(link => (
             <Link
               key={link.href}
               href={link.href}
-              className="group flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              className="nav-link-item group flex items-center gap-1 text-sm font-medium text-muted-foreground opacity-0 transition-colors hover:text-primary"
             >
               <span>{link.label}</span>
               <span className="opacity-50 transition-transform duration-300 group-hover:translate-x-1">
