@@ -141,11 +141,14 @@ const ConnectionParticles = () => {
       }
     };
 
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('mousemove', handleMouseMove);
-    // Defer animation start until first interaction
-    window.addEventListener('mousemove', startAnimation, { once: true });
-    window.addEventListener('scroll', startAnimation, { once: true });
+    if (isAnimating) {
+      window.addEventListener('resize', handleResize);
+      window.addEventListener('mousemove', handleMouseMove);
+    } else {
+      // Defer animation start until first interaction
+      window.addEventListener('mousemove', startAnimation, { once: true });
+      window.addEventListener('scroll', startAnimation, { once: true });
+    }
 
     return () => {
       window.removeEventListener('resize', handleResize);
