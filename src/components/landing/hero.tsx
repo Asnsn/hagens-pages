@@ -1,6 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
-import RollingText from './rolling-text';
+import TextScramble from './text-scramble';
+import RollingText from './rolling-text'; // We might still use this for other things
 
 const ThinkBuildDeliverItem = ({ icon, title, description, color, delay }) => (
   <motion.div
@@ -87,8 +88,8 @@ export default function Hero() {
       <div className="container relative z-10 mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <div>
-            <RollingText
-              text="Think, Build, Deliver."
+             <TextScramble
+              phrases={['Think.', 'Build.', 'Deliver.']}
               className="font-headline text-5xl font-extrabold tracking-tight text-white sm:text-6xl md:text-7xl"
             />
             <p className="mt-6 text-lg text-muted-foreground sm:max-w-xl md:text-xl">

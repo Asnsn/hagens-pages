@@ -1,25 +1,26 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
-import gsap from 'gsap';
+import React, { useRef, useEffect } from 'react';
+import { gsap } from 'gsap';
 
 type RollingTextProps = {
   text: string;
   className?: string;
+  stagger?: number;
 };
 
-export default function RollingText({ text, className }: RollingTextProps) {
+const RollingText: React.FC<RollingTextProps> = ({ text, className, stagger = 0.1 }) => {
   const containerRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
 
     const words = text.split(' ');
-    containerRef.current.innerHTML = ''; // Limpa o conteúdo inicial
+    containerRef.current.innerHTML = ''; // Clear initial content
 
     words.forEach(word => {
       const wordDiv = document.createElement('div');
-      wordDiv.className = 'word-wrapper inline-block overflow-hidden mr-4'; // Adicionado mr-4 para espaço
+      wordDiv.className = 'word-wrapper inline-block overflow-hidden mr-[0.25em]'; // Use em for spacing
       
       const wordSpan = document.createElement('span');
       wordSpan.className = 'word-span inline-block';
@@ -31,27 +32,32 @@ export default function RollingText({ text, className }: RollingTextProps) {
 
     const spans = containerRef.current.querySelectorAll('.word-span');
     
-    gsap.set(spans, { yPercent: 100, autoAlpha: 1 });
+    gsap.set(spans, { yPercent: 110, autoAlpha: 1 });
     
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
-        start: 'top 80%',
+        start: 'top 85%',
         toggleActions: 'play none none none',
       },
     });
 
     tl.to(spans, {
       yPercent: 0,
-      stagger: 0.1,
+      stagger,
       duration: 0.8,
       ease: 'power3.out',
     });
 
     return () => {
       tl.kill();
+      if(tl.scrollTrigger) {
+        tl.scrollTrigger.kill();
+      }
     };
-  }, [text]);
+  }, [text, stagger]);
 
   return <h1 ref={containerRef} className={className}></h1>;
 }
+
+export default RollingText;

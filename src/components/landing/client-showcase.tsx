@@ -1,7 +1,8 @@
 'use client';
 
+import React, { useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { Card, CardContent } from '@/components/ui/card';
+import { gsap } from 'gsap';
 
 const clients = [
   { id: 'client-1', name: 'iPlace', logo: '/logos/iplace.svg' },
@@ -18,9 +19,60 @@ const clients = [
   { id: 'client-12', name: 'Quem Disse, Berenice?', logo: '/logos/quem-disse-berenice.svg' },
 ];
 
+const MarqueeItem = ({ children }) => (
+  <div className="mx-4 flex-shrink-0 flex items-center justify-center w-48 h-24 p-4 bg-white/5 border border-white/10 rounded-lg grayscale hover:grayscale-0 transition-all duration-300">
+    {children}
+  </div>
+);
+
 export default function ClientShowcase() {
+  const marqueeRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<gsap.core.Tween | null>(null);
+
+  useEffect(() => {
+    if (!marqueeRef.current) return;
+    
+    const marquee = marqueeRef.current;
+    const items = marquee.children;
+    const totalWidth = Array.from(items).reduce((acc, item) => acc + item.clientWidth + 32, 0);
+
+    gsap.set(marquee, { width: totalWidth });
+
+    const animateMarquee = () => {
+      animationRef.current = gsap.to(marquee, {
+        x: `-=${totalWidth / 2}`,
+        duration: 30,
+        ease: 'linear',
+        repeat: -1,
+        modifiers: {
+          x: gsap.utils.unitize(x => parseFloat(x) % (totalWidth / 2))
+        }
+      });
+    };
+
+    animateMarquee();
+    
+    const handleMouseMove = (e: MouseEvent) => {
+        const speed = gsap.utils.mapRange(0, window.innerWidth, -1.5, 1.5, e.clientX);
+        gsap.to(animationRef.current, { timeScale: speed, duration: 0.5, ease: 'power2.out' });
+    };
+
+    const handleMouseLeave = () => {
+        gsap.to(animationRef.current, { timeScale: 1, duration: 1, ease: 'power2.out' });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseleave', handleMouseLeave);
+
+    return () => {
+      animationRef.current?.kill();
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, []);
+
   return (
-    <div className="bg-background py-16 sm:py-24">
+    <div className="bg-background py-16 sm:py-24 overflow-hidden">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="font-headline text-3xl font-extrabold tracking-tight sm:text-4xl">
@@ -30,20 +82,20 @@ export default function ClientShowcase() {
             Temos orgulho de ter a confiança de grandes marcas.
           </p>
         </div>
-        <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-          {clients.map((client) => (
-            <Card key={client.id} className="group flex items-center justify-center p-4 transition-transform duration-300 hover:scale-105 hover:shadow-lg bg-white/5 border-white/10">
-              <CardContent className="p-0">
-                <div className="relative h-16 w-32 grayscale transition-all duration-300 group-hover:grayscale-0">
-                  <Image
-                    src={client.logo}
-                    alt={client.name}
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-              </CardContent>
-            </Card>
+      </div>
+      <div className="mt-12 w-full">
+        <div ref={marqueeRef} className="flex">
+          {[...clients, ...clients].map((client, index) => (
+            <MarqueeItem key={`${client.id}-${index}`}>
+              <div className="relative h-16 w-32">
+                <Image
+                  src={client.logo}
+                  alt={client.name}
+                  fill
+                  className="object-contain"
+                />
+              </div>
+            </MarqueeItem>
           ))}
         </div>
       </div>

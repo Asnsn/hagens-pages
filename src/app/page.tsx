@@ -15,9 +15,10 @@ export default function Home() {
       <Header />
       <main className="flex-grow">
         <Hero />
-        <HorizontalScrollGallery id="clientes" className="py-16 sm:py-24">
-          <ClientShowcase />
-        </HorizontalScrollGallery>
+        <HorizontalScrollGallery id="work" />
+        <AnimatedSection id="clientes">
+           <ClientShowcase />
+        </AnimatedSection>
       </main>
       <Footer />
     </div>
