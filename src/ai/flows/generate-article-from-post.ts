@@ -18,8 +18,8 @@ const GenerateArticleInputSchema = z.object({
 export type GenerateArticleInput = z.infer<typeof GenerateArticleInputSchema>;
 
 const GenerateArticleOutputSchema = z.object({
-  title: z.string().describe('A compelling and SEO-friendly title for the blog article.'),
-  content: z.string().describe('The full content of the blog article, formatted in Markdown. It should be well-structured with headings, paragraphs, and lists where appropriate.'),
+  title: z.string().describe('Um título atraente e otimizado para SEO para o artigo do blog, em português brasileiro.'),
+  content: z.string().describe('O conteúdo completo do artigo do blog, formatado em Markdown e em português brasileiro. Deve ser bem estruturado com cabeçalhos, parágrafos e listas, quando apropriado.'),
 });
 export type GenerateArticleOutput = z.infer<typeof GenerateArticleOutputSchema>;
 
