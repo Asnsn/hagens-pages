@@ -3,10 +3,15 @@
 import React, { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 
-// H shape path
+// H shape path (base shape)
 const hPath = "M0 0 H 22 V 25 H 17 V 14 H 5 V 25 H 0 V 0 H 5 V 11 H 17 V 0 H 22 Z";
-// ThinkIcon shape path
-const thinkPath = "M12 2L2 7V17L12 22L22 17V7L12 2ZM12 4.5L19.5 9L12 13.5L4.5 9L12 4.5ZM19.5 10.5L12 15L4.5 10.5M19.5 13.5L12 18L4.5 13.5";
+// Simplified geometric "Think" icon (layered hexagon idea)
+const thinkPath = "M11 2 L2 7 V17 L11 22 L20 17 V7 L11 2 Z M11 6 L17 9 V15 L11 18 L5 15 V9 L11 6 Z";
+// Simplified geometric "Build" icon (star idea)
+const buildPath = "M11 1 L14 8 L22 8 L16 13 L18 21 L11 16 L4 21 L6 13 L0 8 L9 8 L11 1 Z";
+// Simplified geometric "Deliver" icon (circle/check idea)
+const deliverPath = "M11 0 C 4.92 0 0 4.92 0 11 S 4.92 22 11 22 S 22 17.08 22 11 S 17.08 0 11 0 Z M8 12 L10 14 L15 9";
+
 
 const SvgMorphSection = () => {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -15,32 +20,16 @@ const SvgMorphSection = () => {
   useEffect(() => {
     if (!svgRef.current || !pathRef.current) return;
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: svgRef.current,
-        start: 'top center',
-        end: 'bottom center',
-        scrub: 1,
-      },
-      repeat: -1,
-      yoyo: true,
-    });
+    // Define the sequence of shapes for the animation
+    const shapes = [hPath, thinkPath, buildPath, deliverPath, hPath];
+    let currentIndex = 0;
 
-    // We can't use MorphSVGPlugin, but we can animate the 'd' attribute directly.
-    // GSAP is smart enough to interpolate between two paths if they have the same number of points.
-    // For simple shapes, this works well. For complex ones, it can be tricky.
-    // Let's try to make it work by tweening attributes.
-    // A simple fade in/out + scale is a safer bet if direct 'd' animation is jarring.
-
-    const hShape = { d: hPath, scale: 1, autoAlpha: 1, transformOrigin: 'center center' };
-    const thinkShape = { d: thinkPath, scale: 1.2, autoAlpha: 1, transformOrigin: 'center center' };
-
+    // Set the initial shape
     gsap.set(pathRef.current, { attr: { d: hPath } });
 
     const morphTimeline = gsap.timeline({
         repeat: -1,
-        yoyo: true,
-        repeatDelay: 0.5,
+        repeatDelay: 1, // Pause for 1 second before repeating the whole cycle
         scrollTrigger: {
             trigger: svgRef.current,
             start: "top center",
@@ -48,18 +37,16 @@ const SvgMorphSection = () => {
         }
     });
 
-    morphTimeline
-      .to(pathRef.current, {
-        duration: 1,
-        ease: 'power2.inOut',
-        attr: { d: thinkPath },
-      })
-      .to(pathRef.current, {
-        duration: 1,
-        ease: 'power2.inOut',
-        attr: { d: hPath },
-        delay: 0.5
-      });
+    // Create a looping animation through all shapes
+    shapes.slice(1).forEach((shape, index) => {
+        morphTimeline.to(pathRef.current, {
+            duration: 1.2,
+            ease: 'power2.inOut',
+            attr: { d: shape },
+            delay: 1 // Pause for 1 second between morphs
+        });
+    });
+
 
     return () => {
       morphTimeline.kill();
@@ -81,7 +68,7 @@ const SvgMorphSection = () => {
         <div className="mt-12" style={{ width: '150px', height: '150px' }}>
           <svg
             ref={svgRef}
-            viewBox="0 0 24 24"
+            viewBox="0 0 24 25" // Adjusted viewBox to better fit all shapes
             className="w-full h-full"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -89,6 +76,9 @@ const SvgMorphSection = () => {
               ref={pathRef}
               d={hPath}
               fill="hsl(var(--accent))"
+              stroke="hsl(var(--accent))"
+              strokeWidth="0.5"
+              strokeLinejoin="round"
             />
           </svg>
         </div>
