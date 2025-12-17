@@ -11,6 +11,9 @@ import {
 } from 'lucide-react';
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const services = [
   {
@@ -53,35 +56,51 @@ const services = [
 
 export default function Services() {
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const containerRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      cardsRef.current.forEach((card) => {
+      cardsRef.current.forEach((card, index) => {
         if (!card) return;
+        gsap.set(card, { opacity: 0, y: 100 }); // Set initial state
         const icon = card.querySelector('svg');
-        gsap.timeline({
+
+        gsap.to(card, {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          ease: 'power3.out',
           scrollTrigger: {
             trigger: card,
-            start: 'top 80%',
+            start: 'top 90%', // Start animation when card is 90% from the top
+            toggleActions: 'play none none none',
           },
-        })
-        .from(card, { y: 100, opacity: 0, duration: 0.5, ease: 'power3.out' });
+        });
 
         if (icon) {
           const morphTl = gsap.timeline({ paused: true });
           morphTl.to(icon, { rotate: 360, scale: 1.2, duration: 0.4, ease: 'power2.inOut' });
 
-          card.addEventListener('mouseenter', () => morphTl.play());
-          card.addEventListener('mouseleave', () => morphTl.reverse());
+          const enterListener = () => morphTl.play();
+          const leaveListener = () => morphTl.reverse();
+          
+          card.addEventListener('mouseenter', enterListener);
+          card.addEventListener('mouseleave', leaveListener);
+
+          // Cleanup function for this card
+          return () => {
+            card.removeEventListener('mouseenter', enterListener);
+            card.removeEventListener('mouseleave', leaveListener);
+          }
         }
       });
-    });
+    }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" ref={containerRef}>
       <div className="text-center">
         <h2 className="font-headline text-3xl font-extrabold tracking-tight sm:text-4xl">
           Our Services
@@ -93,7 +112,7 @@ export default function Services() {
       </div>
       <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {services.map((service, index) => (
-          <div key={index} ref={(el) => (cardsRef.current[index] = el)} className="opacity-0">
+          <div key={index} ref={(el) => (cardsRef.current[index] = el)}>
             <Card className="h-full transform transition-shadow duration-300 hover:shadow-xl">
               <CardHeader className="flex flex-row items-center gap-4">
                 {service.icon}

@@ -131,7 +131,7 @@ const ConnectionParticles: React.FC = () => {
             opacityValue = 1 - distance / 20000;
             let accentHsl = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
             const [h, s, l] = accentHsl.split(' ').map(val => parseFloat(val));
-            ctx.strokeStyle = `hsla(${h}, ${s}%, ${l}%, ${opacityValue * 0.3})`;
+            ctx.strokeStyle = `hsla(${h}, ${s}%, ${l}%, ${opacityValue * 0.5})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
