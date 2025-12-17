@@ -91,12 +91,12 @@ export default function Hero() {
     <section className="relative">
       <div className="container relative z-10 mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-          <div>
+          <div className="text-center lg:text-left">
              <TextScramble
               phrases={['Think.', 'Build.', 'Deliver.']}
               className="font-headline text-5xl font-extrabold tracking-tight text-white sm:text-6xl md:text-7xl"
             />
-            <p className="mt-6 text-lg text-muted-foreground sm:max-w-xl md:text-xl">
+            <p className="mt-6 text-lg text-muted-foreground sm:max-w-xl md:text-xl mx-auto lg:mx-0">
               Inteligência de dados, criatividade e tecnologia para construir
               soluções inovadoras em cada etapa da jornada do cliente.
             </p>
