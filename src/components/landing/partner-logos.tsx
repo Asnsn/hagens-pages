@@ -8,7 +8,7 @@ export const PartnerLogos = () => {
         alt="Logos dos parceiros: Google Partner Premier 2024, Meta Business Partner, Infobip, Buzzmonitor Partners" 
         width={350} 
         height={252}
-        className="object-contain mix-blend-multiply" 
+        className="object-contain" 
       />
     </div>
   );
