@@ -20,20 +20,64 @@ export default function Header() {
   const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (navRef.current) {
-      gsap.fromTo(
-        '.nav-link-item',
-        { opacity: 0, y: -20 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          stagger: 0.15,
-          ease: 'power3.out',
-          delay: 0.5, // Delay to start after page load
-        }
-      );
-    }
+    const nav = navRef.current;
+    if (!nav) return;
+
+    const links = gsap.utils.toArray<HTMLElement>('.nav-link-item');
+    const navBounds = nav.getBoundingClientRect();
+    
+    const onMouseMove = (e: MouseEvent) => {
+      const mouseX = e.clientX;
+      
+      links.forEach(link => {
+        const linkBounds = link.getBoundingClientRect();
+        const linkCenterX = linkBounds.left + linkBounds.width / 2;
+        
+        const distance = Math.abs(mouseX - linkCenterX);
+        
+        const scale = gsap.utils.mapRange(0, navBounds.width / 2, 1.5, 1, distance);
+        const y = gsap.utils.mapRange(0, navBounds.width / 2, -10, 0, distance);
+
+        gsap.to(link, {
+          scale: scale,
+          y: y,
+          duration: 0.3,
+          ease: 'power2.out'
+        });
+      });
+    };
+
+    const onMouseLeave = () => {
+      gsap.to(links, {
+        scale: 1,
+        y: 0,
+        duration: 0.5,
+        ease: 'elastic.out(1, 0.5)',
+        stagger: 0.05
+      });
+    };
+
+    nav.addEventListener('mousemove', onMouseMove);
+    nav.addEventListener('mouseleave', onMouseLeave);
+
+    // Initial animation for links appearing
+    gsap.fromTo(
+      links,
+      { opacity: 0, y: -20 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        stagger: 0.1,
+        delay: 0.5,
+        ease: 'power3.out',
+      }
+    );
+
+    return () => {
+      nav.removeEventListener('mousemove', onMouseMove);
+      nav.removeEventListener('mouseleave', onMouseLeave);
+    };
   }, []);
 
   return (
@@ -48,12 +92,9 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="nav-link-item group flex items-center gap-1 text-sm font-medium text-muted-foreground opacity-0 transition-colors hover:text-primary"
+              className="nav-link-item group flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
             >
               <span>{link.label}</span>
-              <span className="opacity-50 transition-transform duration-300 group-hover:translate-x-1">
-                →
-              </span>
             </Link>
           ))}
         </nav>
