@@ -6,6 +6,7 @@ import ClientShowcase from '@/components/landing/client-showcase';
 import Footer from '@/components/landing/footer';
 import AnimatedSection from '@/components/landing/animated-section';
 import ConnectionParticles from '@/components/landing/connection-particles';
+import HorizontalScrollGallery from '@/components/landing/horizontal-scroll-gallery';
 
 export default function Home() {
   return (
@@ -14,9 +15,9 @@ export default function Home() {
       <Header />
       <main className="flex-grow">
         <Hero />
-        <AnimatedSection id="clientes" className="py-16 sm:py-24">
+        <HorizontalScrollGallery id="clientes" className="py-16 sm:py-24">
           <ClientShowcase />
-        </AnimatedSection>
+        </HorizontalScrollGallery>
       </main>
       <Footer />
     </div>

@@ -1,11 +1,13 @@
 'use client';
 import { motion } from 'framer-motion';
+import RollingText from './rolling-text';
 
 const ThinkBuildDeliverItem = ({ icon, title, description, color, delay }) => (
   <motion.div
     className="flex items-start gap-4"
     initial={{ opacity: 0, x: -30 }}
-    animate={{ opacity: 1, x: 0 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    viewport={{ once: true, amount: 0.5 }}
     transition={{ duration: 0.7, delay }}
   >
     <div
@@ -41,7 +43,7 @@ const DeliverIcon = () => (
     <rect x="3" y="3" width="18" height="18" rx="2" stroke="black" strokeWidth="2" />
     <rect x="7" y="7" width="4" height="4" rx="1" stroke="black" strokeWidth="2" />
     <rect x="13" y="7" width="4" height="4" rx="1" stroke="black" strokeWidth="2" />
-    <rect x="7" y="13" width="4" height="4" rx="1" stroke="black" strokeWidth="2" />
+    <rect x="7" y="13" width="4" height="4" rx="11" stroke="black" strokeWidth="2" />
     <rect x="13" y="13" width="4" height="4" rx="1" stroke="black" strokeWidth="2" />
   </svg>
 );
@@ -50,7 +52,8 @@ const VideoPlaceholder = () => (
     <motion.div 
         className="relative aspect-video w-full max-w-xl cursor-pointer overflow-hidden rounded-lg bg-black"
         initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.7, delay: 0.5 }}
     >
         <div className="absolute inset-0 flex items-center justify-center">
@@ -80,23 +83,14 @@ const VideoPlaceholder = () => (
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative">
       <div className="container relative z-10 mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={{
-              visible: {
-                transition: {
-                  staggerChildren: 0.3,
-                },
-              },
-            }}
-          >
-            <h1 className="font-headline text-5xl font-extrabold tracking-tight text-white sm:text-6xl md:text-7xl">
-              Think, Build, Deliver.
-            </h1>
+          <div>
+            <RollingText
+              text="Think, Build, Deliver."
+              className="font-headline text-5xl font-extrabold tracking-tight text-white sm:text-6xl md:text-7xl"
+            />
             <p className="mt-6 text-lg text-muted-foreground sm:max-w-xl md:text-xl">
               Inteligência de dados, criatividade e tecnologia para construir
               soluções inovadoras em cada etapa da jornada do cliente.
@@ -124,7 +118,7 @@ export default function Hero() {
                 delay={0.7}
               />
             </div>
-          </motion.div>
+          </div>
           
           <div className="flex items-center justify-center">
             <VideoPlaceholder />

@@ -34,7 +34,7 @@ export default function ClientShowcase() {
           {clients.map((client) => (
             <Card key={client.id} className="group flex items-center justify-center p-4 transition-transform duration-300 hover:scale-105 hover:shadow-lg bg-white/5 border-white/10">
               <CardContent className="p-0">
-                <div className="relative h-16 w-32 grayscale hover:grayscale-0 transition-all duration-300">
+                <div className="relative h-16 w-32 grayscale transition-all duration-300 group-hover:grayscale-0">
                   <Image
                     src={client.logo}
                     alt={client.name}
