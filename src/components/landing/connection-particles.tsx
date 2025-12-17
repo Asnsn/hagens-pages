@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect } from 'react';
+import { gsap } from 'gsap';
 
 const ConnectionParticles: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -15,13 +16,13 @@ const ConnectionParticles: React.FC = () => {
     let particlesArray: Particle[] = [];
     
     const setCanvasSize = () => {
-        const parent = canvas.parentElement;
-        if(parent) {
-            canvas.width = parent.offsetWidth;
-            canvas.height = parent.offsetHeight;
-        }
+      const parent = canvas.parentElement;
+      if (parent) {
+        canvas.width = parent.offsetWidth;
+        canvas.height = parent.offsetHeight;
+      }
     };
-    
+
     const mouse = {
       x: null as number | null,
       y: null as number | null,
@@ -36,9 +37,9 @@ const ConnectionParticles: React.FC = () => {
     window.addEventListener('mousemove', handleMouseMove);
 
     const handleMouseOut = () => {
-        mouse.x = null;
-        mouse.y = null;
-    }
+      mouse.x = null;
+      mouse.y = null;
+    };
     canvas.addEventListener('mouseout', handleMouseOut);
 
     class Particle {
@@ -74,24 +75,24 @@ const ConnectionParticles: React.FC = () => {
         if (this.y > canvas.height || this.y < 0) {
           this.directionY = -this.directionY;
         }
-        
+
         if (mouse.x !== null && mouse.y !== null) {
           let dx = mouse.x - this.x;
           let dy = mouse.y - this.y;
           let distance = Math.sqrt(dx * dx + dy * dy);
           if (distance < mouse.radius + this.size) {
-              if (mouse.x < this.x && this.x < canvas.width - this.size * 10) {
-                  this.x += 3;
-              }
-              if (mouse.x > this.x && this.x > this.size * 10) {
-                  this.x -= 3;
-              }
-              if (mouse.y < this.y && this.y < canvas.height - this.size * 10) {
-                  this.y += 3;
-              }
-              if (mouse.y > this.y && this.y > this.size * 10) {
-                  this.y -= 3;
-              }
+            if (mouse.x < this.x && this.x < canvas.width - this.size * 10) {
+              this.x += 3;
+            }
+            if (mouse.x > this.x && this.x > this.size * 10) {
+              this.x -= 3;
+            }
+            if (mouse.y < this.y && this.y < canvas.height - this.size * 10) {
+              this.y += 3;
+            }
+            if (mouse.y > this.y && this.y > this.size * 10) {
+              this.y -= 3;
+            }
           }
         }
 
@@ -107,30 +108,29 @@ const ConnectionParticles: React.FC = () => {
       particlesArray = [];
       let numberOfParticles = (canvas.height * canvas.width) / 9000;
       for (let i = 0; i < numberOfParticles; i++) {
-        let size = (Math.random() * 2) + 1;
-        let x = (Math.random() * ((canvas.width - size * 2) - (size * 2)) + size * 2);
-        let y = (Math.random() * ((canvas.height - size * 2) - (size * 2)) + size * 2);
-        let directionX = (Math.random() * .2) - .1;
-        let directionY = (Math.random() * .2) - .1;
+        let size = Math.random() * 2 + 1;
+        let x = Math.random() * (canvas.width - size * 2) + size * 2;
+        let y = Math.random() * (canvas.height - size * 2) + size * 2;
+        let directionX = Math.random() * 0.2 - 0.1;
+        let directionY = Math.random() * 0.2 - 0.1;
         let color = document.documentElement.classList.contains('dark') ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)';
-        
         particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
       }
     }
 
     function connect() {
-        if (!ctx || !canvas) return;
+      if (!ctx || !canvas) return;
       let opacityValue = 1;
       for (let a = 0; a < particlesArray.length; a++) {
         for (let b = a; b < particlesArray.length; b++) {
           let distance =
             ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) +
             ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
-          
+
           if (distance < (canvas.width / 7) * (canvas.height / 7)) {
-            opacityValue = 1 - (distance / 20000);
-            let accentHsl = getComputedStyle(document.documentElement).getPropertyValue('--accent');
-            let [h,s,l] = accentHsl.split(' ').map(s => parseFloat(s));
+            opacityValue = 1 - distance / 20000;
+            let accentHsl = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+            const [h, s, l] = accentHsl.split(' ').map(val => parseFloat(val));
             ctx.strokeStyle = `hsla(${h}, ${s}%, ${l}%, ${opacityValue * 0.3})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
@@ -142,38 +142,33 @@ const ConnectionParticles: React.FC = () => {
       }
     }
 
-    let animationFrameId: number;
     function animate() {
       if (!ctx || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
       for (let i = 0; i < particlesArray.length; i++) {
         particlesArray[i].update();
       }
       connect();
-      animationFrameId = requestAnimationFrame(animate);
     }
     
+    gsap.ticker.add(animate);
+    
     const handleResize = () => {
-        cancelAnimationFrame(animationFrameId);
-        init();
-        animate();
+      init();
     };
-
+    
     window.addEventListener('resize', handleResize);
-
     init();
-    animate();
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      gsap.ticker.remove(animate);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       canvas.removeEventListener('mouseout', handleMouseOut);
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="absolute top-0 left-0 -z-10 w-full h-full" />;
+  return <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full -z-10" />;
 };
 
 export default ConnectionParticles;

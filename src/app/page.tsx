@@ -17,9 +17,9 @@ export default function Home() {
         <AnimatedSection id="services" className="bg-secondary py-16 sm:py-24">
           <Services />
         </AnimatedSection>
-        <AnimatedSection id="projects" className="py-16 sm:py-24">
+        <section id="projects">
           <ClientShowcase />
-        </AnimatedSection>
+        </section>
         <AnimatedSection id="testimonials" className="bg-secondary py-16 sm:py-24">
           <Testimonials />
         </AnimatedSection>

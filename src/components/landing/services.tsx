@@ -9,6 +9,8 @@ import {
   LineChart,
   Component,
 } from 'lucide-react';
+import { useRef, useEffect } from 'react';
+import { gsap } from 'gsap';
 
 const services = [
   {
@@ -50,6 +52,34 @@ const services = [
 ];
 
 export default function Services() {
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      cardsRef.current.forEach((card) => {
+        if (!card) return;
+        const icon = card.querySelector('svg');
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 80%',
+          },
+        })
+        .from(card, { y: 100, opacity: 0, duration: 0.5, ease: 'power3.out' });
+
+        if (icon) {
+          const morphTl = gsap.timeline({ paused: true });
+          morphTl.to(icon, { rotate: 360, scale: 1.2, duration: 0.4, ease: 'power2.inOut' });
+
+          card.addEventListener('mouseenter', () => morphTl.play());
+          card.addEventListener('mouseleave', () => morphTl.reverse());
+        }
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="text-center">
@@ -63,11 +93,7 @@ export default function Services() {
       </div>
       <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {services.map((service, index) => (
-          <motion.div
-            key={index}
-            whileHover={{ y: -8, scale: 1.02 }}
-            transition={{ type: 'spring', stiffness: 300 }}
-          >
+          <div key={index} ref={(el) => (cardsRef.current[index] = el)} className="opacity-0">
             <Card className="h-full transform transition-shadow duration-300 hover:shadow-xl">
               <CardHeader className="flex flex-row items-center gap-4">
                 {service.icon}
@@ -79,7 +105,7 @@ export default function Services() {
                 <p className="text-muted-foreground">{service.description}</p>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
         ))}
       </div>
     </div>
