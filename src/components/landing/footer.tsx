@@ -36,7 +36,9 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href="https://www.instagram.com/houseofhagens/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-2 hover:underline"
                 >
                   <Instagram className="h-5 w-5" />

@@ -5,6 +5,11 @@ import {
   generateMarketingCopy,
   type GenerateMarketingCopyInput,
 } from '@/ai/flows/generate-marketing-copy';
+import {
+  generateArticleFromPost,
+  type GenerateArticleInput,
+} from '@/ai/flows/generate-article-from-post';
+
 
 const GenerateCopySchema = z.object({
   productName: z.string().min(1, 'O nome do produto é obrigatório.'),
@@ -61,4 +66,31 @@ export async function submitContactFormAction(
   return {
     success: 'Obrigado pela sua mensagem! Entraremos em contato em breve.',
   };
+}
+
+
+const GenerateArticleSchema = z.object({
+  caption: z.string(),
+  imageUrl: z.string().url(),
+});
+
+export async function generateArticleAction(
+  values: z.infer<typeof GenerateArticleSchema>
+) {
+  const validatedFields = GenerateArticleSchema.safeParse(values);
+
+  if (!validatedFields.success) {
+    return { error: 'Dados do post inválidos.' };
+  }
+
+  try {
+    const input: GenerateArticleInput = validatedFields.data;
+    const result = await generateArticleFromPost(input);
+    return { success: result };
+  } catch (error) {
+    console.error('Error generating article:', error);
+    return {
+      error: 'Falha ao gerar o artigo. A IA pode estar sobrecarregada. Tente novamente.',
+    };
+  }
 }
