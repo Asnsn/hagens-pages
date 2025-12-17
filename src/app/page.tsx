@@ -10,7 +10,7 @@ import ConnectionParticles from '@/components/landing/connection-particles';
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-screen flex-col">
       <ConnectionParticles />
       <Header />
       <main className="flex-grow">

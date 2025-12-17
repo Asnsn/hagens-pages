@@ -13,7 +13,7 @@ const ConnectionParticles = () => {
     if (!ctx) return;
 
     let particles: Particle[];
-    const mouse = { x: 0, y: 0 };
+    const mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
     let animationFrameId: number;
 
     const setCanvasDimensions = () => {
@@ -105,7 +105,10 @@ const ConnectionParticles = () => {
     };
 
     const animate = () => {
-      ctx!.clearRect(0, 0, canvas.width, canvas.height);
+      const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--background').trim();
+      ctx.fillStyle = `hsl(${bgColor})`;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
       for (const particle of particles) {
         particle.update();
         particle.draw();
