@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 const ConnectionParticles = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isAnimating, setIsAnimating] = useState(false);
   const animationFrameIdRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -122,42 +121,25 @@ const ConnectionParticles = () => {
         mouse.x = event.clientX;
         mouse.y = event.clientY;
     };
-    
-    const startAnimation = () => {
-        if (!isAnimating) {
-            setIsAnimating(true);
-            init();
-            animate();
-            window.removeEventListener('mousemove', startAnimation);
-            window.removeEventListener('scroll', startAnimation);
-        }
-    };
 
     const handleResize = () => {
-      if (isAnimating) {
-        if(animationFrameIdRef.current) cancelAnimationFrame(animationFrameIdRef.current);
-        init();
-        animate();
-      }
+      if(animationFrameIdRef.current) cancelAnimationFrame(animationFrameIdRef.current);
+      init();
+      animate();
     };
 
-    if (isAnimating) {
-      window.addEventListener('resize', handleResize);
-      window.addEventListener('mousemove', handleMouseMove);
-    } else {
-      // Defer animation start until first interaction
-      window.addEventListener('mousemove', startAnimation, { once: true });
-      window.addEventListener('scroll', startAnimation, { once: true });
-    }
+    init();
+    animate();
+
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('mousemove', handleMouseMove);
 
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mousemove', startAnimation);
-      window.removeEventListener('scroll', startAnimation);
       if(animationFrameIdRef.current) cancelAnimationFrame(animationFrameIdRef.current);
     };
-  }, [isAnimating]);
+  }, []);
 
   return <canvas ref={canvasRef} className="fixed top-0 left-0 -z-10" />;
 };
