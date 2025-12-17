@@ -23,7 +23,7 @@ export default function HorizontalScrollGallery({ id }: { id?: string }) {
         xPercent: -100 * (sections.length - 3), // Adjust this to control how many are visible at the end
         ease: "none",
         scrollTrigger: {
-          trigger: componentRef.current,
+          trigger: wrapperRef.current,
           pin: true,
           scrub: 1,
           snap: 1 / (sections.length - 1),
