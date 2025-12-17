@@ -20,14 +20,14 @@ export const HagensLogo = ({ className }: { className?: string }) => {
           }
         `}
       </style>
-      <text x="12" y="19" className="logo-text">
+      <text x="30" y="19" className="logo-text">
         agens
       </text>
       <path
-        d="M0 0 H 10 V 25 H 0 V 0 Z M 2 11 H 8 V 14 H 2 Z M 2 2 H 8 V 5 H 2 Z M 2 20 H 8 V 23 H 2 Z"
+        d="M0 0 H 22 V 25 H 17 V 14 H 5 V 25 H 0 V 0 H 5 V 11 H 17 V 0 H 22 Z"
         fill="currentColor"
       />
-      <path d="M 0 11 H 2 V 14 H 0 Z" fill="hsl(var(--accent))" />
+      <path d="M5 11 H 17 V 14 H 5 Z" fill="hsl(var(--accent))" />
     </svg>
   );
 };

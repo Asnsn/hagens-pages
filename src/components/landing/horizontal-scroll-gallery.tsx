@@ -3,98 +3,69 @@
 import React, { useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { gsap } from 'gsap';
-import { Draggable } from 'gsap/dist/Draggable';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
-gsap.registerPlugin(Draggable);
+gsap.registerPlugin(ScrollTrigger);
 
 const slides = PlaceHolderImages.filter(img => img.id.startsWith('client-'));
 
 export default function HorizontalScrollGallery({ id }: { id?: string }) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const componentRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current || !wrapperRef.current) return;
+    if (!componentRef.current || !wrapperRef.current) return;
 
-    const container = containerRef.current;
-    const wrapper = wrapperRef.current;
+    let ctx = gsap.context(() => {
+      const sections = gsap.utils.toArray(".slide");
+      let to = gsap.to(sections, {
+        xPercent: -100 * (sections.length - 3), // Adjust this to control how many are visible at the end
+        ease: "none",
+        scrollTrigger: {
+          trigger: componentRef.current,
+          pin: true,
+          scrub: 1,
+          snap: 1 / (sections.length - 1),
+          // base vertical scrolling on how wide the container is so it feels more natural.
+          end: () => "+=" + wrapperRef.current!.offsetWidth,
+        },
+      });
 
-    const proxy = document.createElement('div');
-    const numSlides = slides.length;
-    const slideWidth = wrapper.querySelector('.slide')?.clientWidth || 0;
-    const wrapWidth = numSlides * slideWidth;
+      return () => to.kill();
+    }, componentRef);
+    return () => ctx.revert();
 
-    gsap.set(wrapper, { width: wrapWidth });
-    gsap.set(container, { height: 'auto', overflow: 'visible' });
-
-    const animation = gsap.to(wrapper, {
-      x: -wrapWidth / 2,
-      ease: "none",
-      repeat: -1,
-      modifiers: {
-        x: gsap.utils.unitize(x => parseFloat(x) % (wrapWidth / 2))
-      }
-    });
-
-    Draggable.create(proxy, {
-      type: 'x',
-      trigger: wrapper,
-      inertia: true,
-      onDrag: function() {
-        const x = this.x;
-        const newX = (parseFloat(gsap.getProperty(wrapper, 'x') as string) + x);
-        gsap.set(wrapper, { x: newX });
-      },
-      onThrowUpdate: function() {
-        gsap.set(wrapper, { x: this.x });
-      }
-    });
-
-    const handleMouseEnter = () => animation.pause();
-    const handleMouseLeave = () => animation.resume();
-
-    wrapper.addEventListener('mouseenter', handleMouseEnter);
-    wrapper.addEventListener('mouseleave', handleMouseLeave);
-
-    return () => {
-      Draggable.get(proxy)?.kill();
-      animation.kill();
-      wrapper.removeEventListener('mouseenter', handleMouseEnter);
-      wrapper.removeEventListener('mouseleave', handleMouseLeave);
-    };
   }, []);
 
   return (
-     <section id={id} className="py-16 sm:py-24 bg-background overflow-hidden">
+     <section id={id} ref={componentRef} className="py-16 sm:py-24 bg-background overflow-hidden">
         <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center mb-12">
              <h2 className="font-headline text-3xl font-extrabold tracking-tight sm:text-4xl">Nosso Trabalho</h2>
              <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
                 Confira alguns dos projetos que tivemos o prazer de realizar.
              </p>
         </div>
-        <div ref={containerRef} className="relative w-full cursor-grab">
-            <div ref={wrapperRef} className="flex">
-                {[...slides, ...slides].map((slide, index) => (
-                    <div key={`${slide.id}-${index}`} className="slide flex-shrink-0 w-[40vw] md:w-[30vw] lg:w-[25vw] p-4">
-                        <div className="relative aspect-[4/5] rounded-lg overflow-hidden group">
-                             <Image
-                                src={slide.imageUrl}
-                                alt={slide.description}
-                                fill
-                                sizes="(max-width: 768px) 40vw, 30vw"
-                                data-ai-hint={slide.imageHint}
-                                className="object-cover group-hover:scale-105 transition-transform duration-500"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                            <div className="absolute bottom-0 left-0 p-6">
-                                <h3 className="text-white font-bold text-lg">Projeto {slide.id.split('-')[1]}</h3>
-                                <p className="text-white/80 text-sm mt-1">{slide.description}</p>
-                            </div>
+        <div ref={wrapperRef} className="flex w-[400vw] md:w-[300vw] lg:w-[200vw]">
+            {slides.map((slide, index) => (
+                <div key={`${slide.id}-${index}`} className="slide flex-shrink-0 w-screen md:w-[50vw] lg:w-[33.33vw] p-4">
+                    <div className="relative aspect-[4/5] rounded-lg overflow-hidden group">
+                         <Image
+                            src={slide.imageUrl}
+                            alt={slide.description}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            data-ai-hint={slide.imageHint}
+                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                        <div className="absolute bottom-0 left-0 p-6">
+                            <h3 className="text-white font-bold text-lg">Projeto {slide.id.split('-')[1]}</h3>
+                            <p className="text-white/80 text-sm mt-1">{slide.description}</p>
                         </div>
                     </div>
-                ))}
-            </div>
+                </div>
+            ))}
         </div>
     </section>
   );

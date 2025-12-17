@@ -5,19 +5,21 @@ import { gsap } from 'gsap';
 
 const ConnectionParticles: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const isInitialized = useRef(false);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (isInitialized.current || !canvasRef.current) return;
+    isInitialized.current = true;
 
+    const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-
+    
     let particlesArray: Particle[] = [];
     const mouse = {
       x: null as number | null,
       y: null as number | null,
-      radius: 150,
+      radius: 100,
     };
     
     let animationFrameId: number;
@@ -25,7 +27,7 @@ const ConnectionParticles: React.FC = () => {
     const setCanvasSize = () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        mouse.radius = (canvas.height / 80) * (canvas.width / 80);
+        mouse.radius = (canvas.height / 80) * (canvas.width / 80) * 0.5; // smaller radius
     };
 
     const handleMouseMove = (event: MouseEvent) => {
@@ -106,8 +108,8 @@ const ConnectionParticles: React.FC = () => {
       let numberOfParticles = (canvas.width * canvas.height) / 9000;
       for (let i = 0; i < numberOfParticles * 0.5; i++) {
         let size = (Math.random() * 2) + 1;
-        let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
-        let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+        let x = (Math.random() * (innerWidth - size * 2) + size * 2);
+        let y = (Math.random() * (innerHeight - size * 2) + size * 2);
         let directionX = (Math.random() * 0.4) - 0.2;
         let directionY = (Math.random() * 0.4) - 0.2;
         let color = 'rgba(255, 255, 255, 0.5)';
@@ -118,8 +120,8 @@ const ConnectionParticles: React.FC = () => {
     function connect() {
       if (!ctx) return;
       let opacityValue = 1;
-      let accentHsl = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-      const [h, s, l] = accentHsl.split(' ').map(val => parseFloat(val));
+      const accentHsl = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+      const [h, s, l] = accentHsl.split(' ').map(val => parseFloat(val.replace('%', '')));
       
       for (let a = 0; a < particlesArray.length; a++) {
         for (let b = a; b < particlesArray.length; b++) {
@@ -164,6 +166,7 @@ const ConnectionParticles: React.FC = () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseout', handleMouseOut);
       cancelAnimationFrame(animationFrameId);
+      isInitialized.current = false;
     };
   }, []);
 

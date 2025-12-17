@@ -1,15 +1,12 @@
 'use client';
 import { motion } from 'framer-motion';
 import TextScramble from './text-scramble';
-import RollingText from './rolling-text'; // We might still use this for other things
+import { useEffect } from 'react';
+import { gsap } from 'gsap';
 
-const ThinkBuildDeliverItem = ({ icon, title, description, color, delay }) => (
-  <motion.div
-    className="flex items-start gap-4"
-    initial={{ opacity: 0, x: -30 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    viewport={{ once: true, amount: 0.5 }}
-    transition={{ duration: 0.7, delay }}
+const ThinkBuildDeliverItem = ({ icon, title, description, color, className }) => (
+  <div
+    className={`flex items-start gap-4 ${className}`}
   >
     <div
       className="mt-1 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full"
@@ -23,7 +20,7 @@ const ThinkBuildDeliverItem = ({ icon, title, description, color, delay }) => (
       </h3>
       <p className="mt-1 text-muted-foreground">{description}</p>
     </div>
-  </motion.div>
+  </div>
 );
 
 const ThinkIcon = () => (
@@ -83,6 +80,24 @@ const VideoPlaceholder = () => (
 );
 
 export default function Hero() {
+  useEffect(() => {
+    gsap.fromTo('.tbd-item', 
+      { opacity: 0, y: 50 },
+      { 
+        opacity: 1, 
+        y: 0, 
+        stagger: 0.3,
+        duration: 0.8,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.tbd-item',
+          start: 'top 90%',
+          toggleActions: 'play none none none',
+        }
+      }
+    );
+  }, []);
+
   return (
     <section className="relative">
       <div className="container relative z-10 mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8">
@@ -102,21 +117,21 @@ export default function Hero() {
                 title="THINK"
                 description="Mapeamos a jornada de consumo, apoiados em inovação, design e análise de tendências de mercado."
                 color="#F923C7" // Magenta
-                delay={0.3}
+                className="tbd-item"
               />
               <ThinkBuildDeliverItem
                 icon={<BuildIcon />}
                 title="BUILD"
                 description="Construímos soluções personalizadas e adaptadas a cada desafio e às necessidades do cliente."
                 color="#0CF22C" // Green
-                delay={0.5}
+                className="tbd-item"
               />
               <ThinkBuildDeliverItem
                 icon={<DeliverIcon />}
                 title="DELIVER"
                 description="Colocamos em prática as soluções desenvolvidas, monitorando indicadores-chaves e ajustando continuamente para assegurar impacto e valor sustentáveis."
                 color="#02A6F8" // Blue
-                delay={0.7}
+                className="tbd-item"
               />
             </div>
           </div>
