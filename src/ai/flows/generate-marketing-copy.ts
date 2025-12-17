@@ -23,7 +23,7 @@ const GenerateMarketingCopyInputSchema = z.object({
 export type GenerateMarketingCopyInput = z.infer<typeof GenerateMarketingCopyInputSchema>;
 
 const GenerateMarketingCopyOutputSchema = z.object({
-  marketingCopy: z.string().describe('A sugestão de texto de marketing gerada, em português brasileiro.'),
+  marketingCopy: z.string().describe('The generated marketing copy suggestion.'),
 });
 export type GenerateMarketingCopyOutput = z.infer<typeof GenerateMarketingCopyOutputSchema>;
 
@@ -37,16 +37,16 @@ const prompt = ai.definePrompt({
   name: 'generateMarketingCopyPrompt',
   input: {schema: GenerateMarketingCopyInputSchema},
   output: {schema: GenerateMarketingCopyOutputSchema},
-  prompt: `Você é um especialista em marketing encarregado de gerar um texto de marketing atraente.
+  prompt: `You are a marketing expert tasked with generating compelling marketing copy.
 
-Com base nas seguintes informações, gere uma sugestão de texto de marketing em português brasileiro:
+Based on the following information, generate a marketing copy suggestion. The final output must be in Brazilian Portuguese.
 
-Nome do Produto/Serviço: {{{productName}}}
-Público-alvo: {{{targetAudience}}}
-Principais Características/Benefícios: {{{keyFeatures}}}
-Tom de Voz: {{{tone}}}
+Product/Service Name: {{{productName}}}
+Target Audience: {{{targetAudience}}}
+Key Features/Benefits: {{{keyFeatures}}}
+Tone of Voice: {{{tone}}}
 
-Texto de Marketing:`,
+Marketing Copy:`,
 });
 
 const generateMarketingCopyFlow = ai.defineFlow(

@@ -18,8 +18,8 @@ const GenerateArticleInputSchema = z.object({
 export type GenerateArticleInput = z.infer<typeof GenerateArticleInputSchema>;
 
 const GenerateArticleOutputSchema = z.object({
-  title: z.string().describe('Um título atraente e otimizado para SEO para o artigo do blog, em português brasileiro.'),
-  content: z.string().describe('O conteúdo completo do artigo do blog, formatado em Markdown e em português brasileiro. Deve ser bem estruturado com cabeçalhos, parágrafos e listas, quando apropriado.'),
+  title: z.string().describe('An engaging, SEO-optimized title for the blog article.'),
+  content: z.string().describe('The full content of the blog article, formatted in Markdown. It should be well-structured with headings, paragraphs, and lists where appropriate.'),
 });
 export type GenerateArticleOutput = z.infer<typeof GenerateArticleOutputSchema>;
 
@@ -38,7 +38,7 @@ const prompt = ai.definePrompt({
     Analyze the provided image and caption from the Instagram post to understand the core topic and context.
     
     Based on this analysis, generate a complete blog article with the following characteristics:
-    - It must be written in Brazilian Portuguese.
+    - The final output MUST be written in Brazilian Portuguese.
     - The tone should be professional, insightful, and engaging.
     - The content should elaborate on the concepts mentioned in the post, providing more depth, examples, or strategic insights.
     - The article must be well-structured, using Markdown for formatting (e.g., # for titles, ## for headings, * for list items).
