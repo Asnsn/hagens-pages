@@ -7,7 +7,7 @@ import ConnectionParticles from '@/components/landing/connection-particles';
 export default function Hero() {
   return (
     <motion.section
-      className="relative bg-background overflow-hidden"
+      className="relative bg-background"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}

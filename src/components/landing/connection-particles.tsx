@@ -30,8 +30,9 @@ const ConnectionParticles: React.FC = () => {
     };
 
     const handleMouseMove = (event: MouseEvent) => {
-      mouse.x = event.clientX;
-      mouse.y = event.clientY;
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = event.clientX - rect.left;
+      mouse.y = event.clientY - rect.top;
     };
     window.addEventListener('mousemove', handleMouseMove);
 
@@ -108,8 +109,8 @@ const ConnectionParticles: React.FC = () => {
       let numberOfParticles = (canvas.height * canvas.width) / 9000;
       for (let i = 0; i < numberOfParticles; i++) {
         let size = Math.random() * 2 + 1;
-        let x = Math.random() * (canvas.width - size * 2 - size * 2) + size * 2;
-        let y = Math.random() * (canvas.height - size * 2 - size * 2) + size * 2;
+        let x = Math.random() * (canvas.width - size * 2) + size * 2;
+        let y = Math.random() * (canvas.height - size * 2) + size * 2;
         let directionX = Math.random() * 0.4 - 0.2;
         let directionY = Math.random() * 0.4 - 0.2;
         let color = document.documentElement.classList.contains('dark') ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)';
@@ -130,7 +131,7 @@ const ConnectionParticles: React.FC = () => {
           if (distance < (canvas.width / 7) * (canvas.height / 7)) {
             opacityValue = 1 - (distance / 20000);
             let accentHsl = getComputedStyle(document.documentElement).getPropertyValue('--accent');
-            let [h,s,l] = accentHsl.split(' ').map(parseFloat);
+            let [h,s,l] = accentHsl.split(' ').map(s => parseFloat(s));
             ctx.strokeStyle = `hsla(${h}, ${s}%, ${l}%, ${opacityValue * 0.3})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
