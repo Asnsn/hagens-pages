@@ -14,28 +14,29 @@ const ConnectionParticles: React.FC = () => {
     if (!ctx) return;
 
     let particlesArray: Particle[] = [];
-    
-    const setCanvasSize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-
     const mouse = {
       x: null as number | null,
       y: null as number | null,
-      radius: (canvas.height / 80) * (canvas.width / 80),
+      radius: 150,
+    };
+
+    const setCanvasSize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      mouse.radius = (canvas.height / 80) * (canvas.width / 80);
     };
 
     const handleMouseMove = (event: MouseEvent) => {
       mouse.x = event.clientX;
       mouse.y = event.clientY;
     };
-    window.addEventListener('mousemove', handleMouseMove);
 
     const handleMouseOut = () => {
       mouse.x = null;
       mouse.y = null;
     };
+    
+    window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseout', handleMouseOut);
 
     class Particle {
@@ -101,13 +102,13 @@ const ConnectionParticles: React.FC = () => {
       setCanvasSize();
       particlesArray = [];
       let numberOfParticles = (canvas.width * canvas.height) / 9000;
-      for (let i = 0; i < numberOfParticles; i++) {
-        let size = Math.random() * 2 + 1;
-        let x = Math.random() * (innerWidth - size * 2 - size * 2) + size * 2;
-        let y = Math.random() * (innerHeight - size * 2 - size * 2) + size * 2;
-        let directionX = Math.random() * 0.2 - 0.1;
-        let directionY = Math.random() * 0.2 - 0.1;
-        let color = document.documentElement.classList.contains('dark') ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)';
+      for (let i = 0; i < numberOfParticles * 0.5; i++) {
+        let size = (Math.random() * 2) + 1;
+        let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+        let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+        let directionX = (Math.random() * 0.4) - 0.2;
+        let directionY = (Math.random() * 0.4) - 0.2;
+        let color = 'rgba(255, 255, 255, 0.5)';
         particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
       }
     }
@@ -115,24 +116,22 @@ const ConnectionParticles: React.FC = () => {
     function connect() {
       if (!ctx) return;
       let opacityValue = 1;
+      let accentHsl = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+      const [h, s, l] = accentHsl.split(' ').map(val => parseFloat(val));
+      
       for (let a = 0; a < particlesArray.length; a++) {
         for (let b = a; b < particlesArray.length; b++) {
-          let distance =
-            ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) +
+          let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) +
             ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
 
           if (distance < (canvas.width / 7) * (canvas.height / 7)) {
-            opacityValue = 1 - distance / 20000;
-            let accentHsl = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-            if (accentHsl) {
-              const [h, s, l] = accentHsl.split(' ').map(val => parseFloat(val));
-              ctx.strokeStyle = `hsla(${h}, ${s}%, ${l}%, ${opacityValue * 0.5})`;
-              ctx.lineWidth = 1;
-              ctx.beginPath();
-              ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-              ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-              ctx.stroke();
-            }
+            opacityValue = 1 - (distance / 20000);
+            ctx.strokeStyle = `hsla(${h}, ${s}%, ${l}%, ${opacityValue})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+            ctx.stroke();
           }
         }
       }
@@ -148,7 +147,7 @@ const ConnectionParticles: React.FC = () => {
     }
     
     gsap.ticker.add(animate);
-    
+
     const handleResize = () => {
       init();
     };
@@ -157,14 +156,14 @@ const ConnectionParticles: React.FC = () => {
     init();
 
     return () => {
-      gsap.ticker.remove(animate);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseout', handleMouseOut);
+      gsap.ticker.remove(animate);
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full -z-10" />;
+  return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10" />;
 };
 
 export default ConnectionParticles;

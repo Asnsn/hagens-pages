@@ -2,13 +2,11 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import ConnectionParticles from '@/components/landing/connection-particles';
 import RollingText from './rolling-text';
 
 export default function Hero() {
   return (
-    <section className="relative bg-background">
-      <ConnectionParticles />
+    <section className="relative bg-background/0">
       <div className="container relative z-10 mx-auto max-w-7xl px-4 py-24 text-center sm:px-6 sm:py-32 lg:px-8">
         <h1
           className="font-headline text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
