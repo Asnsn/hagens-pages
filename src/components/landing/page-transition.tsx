@@ -7,8 +7,8 @@ const PageTransition = () => {
   const { isTransitioning } = useTransitionContext();
   const overlayRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
-  const gradientStop1Ref = useRef<SVGStopElement>(null);
-  const gradientStop2Ref = useRef<SVGStopElement>(null);
+  const gradientStopAccentRef = useRef<SVGStopElement>(null);
+  const gradientStopBgRef = useRef<SVGStopElement>(null);
 
 
   useEffect(() => {
@@ -18,13 +18,14 @@ const PageTransition = () => {
           // The context will handle the navigation after this
         },
       })
-      .set([pathRef.current, gradientStop1Ref.current, gradientStop2Ref.current], {
-        attr: { 
-          d: 'M 0 100 V 100 Q 50 100 100 100 V 100 z',
-        },
+      .set(pathRef.current, {
+        attr: { d: 'M 0 100 V 100 Q 50 100 100 100 V 100 z' },
       })
-      .set(gradientStop1Ref.current, { attr: { 'offset': '0%' }})
-      .set(gradientStop2Ref.current, { attr: { 'offset': '0%' }})
+      // Reset gradient stops
+      .set(gradientStopAccentRef.current, { attr: { 'offset': '0%' }})
+      .set(gradientStopBgRef.current, { attr: { 'offset': '0%' }})
+
+      // Animate the path shape
       .to(pathRef.current, {
         duration: 0.8,
         ease: 'power4.in',
@@ -35,11 +36,13 @@ const PageTransition = () => {
         ease: 'power2',
         attr: { d: 'M 0 100 V 0 Q 50 0 100 0 V 100 z' },
       }, '-=0.2')
-      .to([gradientStop1Ref.current, gradientStop2Ref.current], {
-        duration: 0.8,
+
+      // Animate the gradient position to create the fade effect
+      .to(gradientStopBgRef.current, {
+        duration: 1, // Animate the background color stop
         ease: 'power2.inOut',
         attr: { 'offset': '100%' }
-      }, 0.2);
+      }, 0.1); // Start the gradient animation shortly after the path animation
 
       gsap.set(overlayRef.current, { display: 'block' });
 
@@ -56,8 +59,8 @@ const PageTransition = () => {
       <svg className="h-full w-full" preserveAspectRatio="none" viewBox="0 0 100 100">
         <defs>
             <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop ref={gradientStop1Ref} offset="0%" stopColor="hsl(var(--accent))" />
-                <stop ref={gradientStop2Ref} offset="0%" stopColor="hsl(var(--background))" />
+                <stop ref={gradientStopAccentRef} offset="0%" stopColor="hsl(var(--accent))" />
+                <stop ref={gradientStopBgRef} offset="0%" stopColor="hsl(var(--background))" />
             </linearGradient>
         </defs>
         <path
