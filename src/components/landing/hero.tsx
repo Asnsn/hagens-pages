@@ -6,12 +6,7 @@ import ConnectionParticles from '@/components/landing/connection-particles';
 
 export default function Hero() {
   return (
-    <motion.section
-      className="relative bg-background"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-    >
+    <section className="relative bg-background">
       <ConnectionParticles />
       <div className="container relative z-10 mx-auto max-w-7xl px-4 py-24 text-center sm:px-6 sm:py-32 lg:px-8">
         <motion.h1
@@ -46,6 +41,6 @@ export default function Hero() {
           </Button>
         </motion.div>
       </div>
-    </motion.section>
+    </section>
   );
 }
