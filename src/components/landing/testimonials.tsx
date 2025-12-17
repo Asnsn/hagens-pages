@@ -12,24 +12,24 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 const testimonials = [
   {
     id: 'testimonial-1',
-    name: 'Jane Doe',
+    name: 'Joana Silva',
     title: 'CEO, TechCorp',
     quote:
-      'Innovatech transformed our online presence. Their team is professional, creative, and delivered beyond our expectations. We\'ve seen a significant increase in engagement and leads.',
+      'A Hagens transformou nossa presença online. A equipe é profissional, criativa e entregou além de nossas expectativas. Vimos um aumento significativo no engajamento e nos leads.',
   },
   {
     id: 'testimonial-2',
-    name: 'John Smith',
-    title: 'Founder, StartupX',
+    name: 'João Santos',
+    title: 'Fundador, StartupX',
     quote:
-      'Working with Innovatech was a game-changer. Their data-driven approach to marketing helped us understand our audience better and achieve remarkable growth in a short period.',
+      'Trabalhar com a Hagens mudou o jogo. Sua abordagem orientada por dados para o marketing nos ajudou a entender melhor nosso público e alcançar um crescimento notável em um curto período.',
   },
   {
     id: 'testimonial-3',
-    name: 'Sarah Lee',
-    title: 'Marketing Director, Creative Minds',
+    name: 'Sara Lima',
+    title: 'Diretora de Marketing, Creative Minds',
     quote:
-      'The new website is not only beautiful but also incredibly fast and user-friendly. The whole process was seamless, and the team was a pleasure to work with.',
+      'O novo site não é apenas bonito, mas também incrivelmente rápido e fácil de usar. Todo o processo foi tranquilo, e foi um prazer trabalhar com a equipe.',
   },
 ];
 
@@ -42,10 +42,10 @@ export default function Testimonials() {
     <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="text-center">
         <h2 className="font-headline text-3xl font-extrabold tracking-tight sm:text-4xl">
-          What Our Clients Say
+          O Que Nossos Clientes Dizem
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-          We're proud to have earned the trust of our amazing clients.
+          Temos orgulho de ter conquistado a confiança de nossos incríveis clientes.
         </p>
       </div>
       <Carousel

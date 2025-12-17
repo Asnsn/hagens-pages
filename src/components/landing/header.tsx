@@ -7,10 +7,10 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 const navLinks = [
-  { href: '#services', label: 'Services' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#testimonials', label: 'Testimonials' },
-  { href: '#contact', label: 'Contact' },
+  { href: '#servicos', label: 'Serviços' },
+  { href: '#projetos', label: 'Projetos' },
+  { href: '#depoimentos', label: 'Depoimentos' },
+  { href: '#contato', label: 'Contato' },
 ];
 
 export default function Header() {
@@ -21,7 +21,7 @@ export default function Header() {
       <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2">
           <Bot className="h-7 w-7 text-primary" />
-          <span className="font-headline text-2xl font-bold">Innovatech</span>
+          <span className="font-headline text-2xl font-bold">Hagens</span>
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
@@ -38,13 +38,13 @@ export default function Header() {
 
         <div className="flex items-center gap-2">
           <Button className="hidden md:flex" asChild>
-            <Link href="#ai-generator">Try Our AI</Link>
+            <Link href="#gerador-ia">Experimente nossa IA</Link>
           </Button>
           <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon" className="md:hidden">
                 <Menu className="h-5 w-5" />
-                <span className="sr-only">Open menu</span>
+                <span className="sr-only">Abrir menu</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="right">
@@ -56,7 +56,7 @@ export default function Header() {
                 >
                   <Bot className="h-7 w-7 text-primary" />
                   <span className="font-headline text-2xl font-bold">
-                    Innovatech
+                    Hagens
                   </span>
                 </Link>
                 <nav className="flex flex-col gap-4">
@@ -73,10 +73,10 @@ export default function Header() {
                 </nav>
                 <Button asChild className="mt-4">
                   <Link
-                    href="#ai-generator"
+                    href="#gerador-ia"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Try Our AI
+                    Experimente nossa IA
                   </Link>
                 </Button>
               </div>

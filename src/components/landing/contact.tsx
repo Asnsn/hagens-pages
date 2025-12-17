@@ -21,9 +21,9 @@ import { submitContactFormAction } from '@/app/actions';
 import { Send } from 'lucide-react';
 
 const ContactFormSchema = z.object({
-  name: z.string().min(1, 'Name is required.'),
-  email: z.string().email('Invalid email address.'),
-  message: z.string().min(10, 'Message must be at least 10 characters long.'),
+  name: z.string().min(1, 'O nome é obrigatório.'),
+  email: z.string().email('Endereço de e-mail inválido.'),
+  message: z.string().min(10, 'A mensagem deve ter pelo menos 10 caracteres.'),
 });
 
 type ContactFormValues = z.infer<typeof ContactFormSchema>;
@@ -47,13 +47,13 @@ export default function Contact() {
       if (result.error) {
         toast({
           variant: 'destructive',
-          title: 'Error',
+          title: 'Erro',
           description: result.error,
         });
       }
       if (result.success) {
         toast({
-          title: 'Success!',
+          title: 'Sucesso!',
           description: result.success,
         });
         form.reset();
@@ -65,11 +65,10 @@ export default function Contact() {
     <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-2xl text-center">
         <h2 className="font-headline text-3xl font-extrabold tracking-tight sm:text-4xl">
-          Get in Touch
+          Entre em Contato
         </h2>
         <p className="mt-4 text-lg text-muted-foreground">
-          Have a project in mind? We'd love to hear from you. Fill out the
-          form below and we'll get back to you as soon as possible.
+          Tem um projeto em mente? Adoraríamos ouvir de você. Preencha o formulário abaixo e entraremos em contato o mais breve possível.
         </p>
       </div>
       <div className="mx-auto mt-12 max-w-xl">
@@ -80,9 +79,9 @@ export default function Contact() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Full Name</FormLabel>
+                  <FormLabel>Nome Completo</FormLabel>
                   <FormControl>
-                    <Input placeholder="Your Name" {...field} />
+                    <Input placeholder="Seu Nome" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -93,11 +92,11 @@ export default function Contact() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email Address</FormLabel>
+                  <FormLabel>Endereço de E-mail</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
-                      placeholder="your.email@example.com"
+                      placeholder="seu.email@exemplo.com"
                       {...field}
                     />
                   </FormControl>
@@ -110,10 +109,10 @@ export default function Contact() {
               name="message"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Your Message</FormLabel>
+                  <FormLabel>Sua Mensagem</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Tell us about your project..."
+                      placeholder="Conte-nos sobre seu projeto..."
                       rows={6}
                       {...field}
                     />
@@ -124,7 +123,7 @@ export default function Contact() {
             />
             <Button type="submit" className="w-full" disabled={isPending}>
               <Send className="mr-2 h-4 w-4" />
-              {isPending ? 'Sending...' : 'Send Message'}
+              {isPending ? 'Enviando...' : 'Enviar Mensagem'}
             </Button>
           </form>
         </Form>

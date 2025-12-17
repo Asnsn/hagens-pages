@@ -25,19 +25,19 @@ export default function Home() {
       <Header />
       <main className="flex-grow">
         <Hero />
-        <AnimatedSection id="services" className="bg-secondary py-16 sm:py-24">
+        <AnimatedSection id="servicos" className="bg-secondary py-16 sm:py-24">
           <Services />
         </AnimatedSection>
-        <section id="projects">
+        <section id="projetos">
           <ClientShowcase />
         </section>
-        <AnimatedSection id="testimonials" className="bg-secondary py-16 sm:py-24">
+        <AnimatedSection id="depoimentos" className="bg-secondary py-16 sm:py-24">
           <Testimonials />
         </AnimatedSection>
-        <AnimatedSection id="ai-generator" className="py-16 sm:py-24">
+        <AnimatedSection id="gerador-ia" className="py-16 sm:py-24">
           <AiContentGenerator />
         </AnimatedSection>
-        <AnimatedSection id="contact" className="bg-secondary py-16 sm:py-24">
+        <AnimatedSection id="contato" className="bg-secondary py-16 sm:py-24">
           <Contact />
         </AnimatedSection>
       </main>

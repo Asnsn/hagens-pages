@@ -3,9 +3,9 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'Innovatech Landing',
+  title: 'Hagens | Comunicação Visual',
   description:
-    'Welcome to Innovatech, your partner in marketing and technology solutions.',
+    'Hagens - Especialistas em comunicação visual, fachadas em ACM, letras caixa e mais.',
 };
 
 export default function RootLayout({
@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="dark">
+    <html lang="pt-BR" suppressHydrationWarning className="dark">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link

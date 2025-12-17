@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="flex items-center gap-2">
           <Bot className="h-6 w-6 text-muted-foreground" />
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Innovatech. All rights reserved.
+            &copy; {new Date().getFullYear()} Hagens. Todos os direitos reservados.
           </p>
         </div>
         <div className="flex items-center gap-4">

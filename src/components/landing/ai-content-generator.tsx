@@ -30,10 +30,10 @@ import { Sparkles } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const GenerateCopySchema = z.object({
-  productName: z.string().min(1, 'Product name is required.'),
-  targetAudience: z.string().min(1, 'Target audience is required.'),
-  keyFeatures: z.string().min(1, 'Key features are required.'),
-  tone: z.string().default('professional'),
+  productName: z.string().min(1, 'O nome do produto é obrigatório.'),
+  targetAudience: z.string().min(1, 'O público-alvo é obrigatório.'),
+  keyFeatures: z.string().min(1, 'As características são obrigatórias.'),
+  tone: z.string().default('profissional'),
 });
 
 type GenerateCopyFormValues = z.infer<typeof GenerateCopySchema>;
@@ -60,7 +60,7 @@ export default function AiContentGenerator() {
       if (result.error) {
         toast({
           variant: 'destructive',
-          title: 'Error',
+          title: 'Erro',
           description: result.error,
         });
       }
@@ -74,17 +74,15 @@ export default function AiContentGenerator() {
     <div className="container mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
       <div>
         <h2 className="font-headline text-3xl font-extrabold tracking-tight sm:text-4xl">
-          AI-Powered Content Generation
+          Gere Textos com Inteligência Artificial
         </h2>
         <p className="mt-4 text-lg text-muted-foreground">
-          Struggling with writer's block? Use our AI tool to generate
-          compelling marketing copy in seconds. Just provide a few details and
-          let our AI do the heavy lifting.
+          Sem criatividade para textos? Use nossa ferramenta de IA para gerar textos de marketing impactantes em segundos. Forneça alguns detalhes e deixe a IA fazer o trabalho pesado.
         </p>
         <Card className="mt-8">
           <CardHeader>
             <CardTitle className="font-headline text-xl">
-              Generate Your Copy
+              Gerar seu Texto
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -98,10 +96,10 @@ export default function AiContentGenerator() {
                   name="productName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Product/Service Name</FormLabel>
+                      <FormLabel>Nome do Produto/Serviço</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="e.g., Innovatech Web Design"
+                          placeholder="Ex: Fachada em ACM"
                           {...field}
                         />
                       </FormControl>
@@ -114,10 +112,10 @@ export default function AiContentGenerator() {
                   name="targetAudience"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Target Audience</FormLabel>
+                      <FormLabel>Público-alvo</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="e.g., Small business owners"
+                          placeholder="Ex: Lojas e comércios locais"
                           {...field}
                         />
                       </FormControl>
@@ -130,10 +128,10 @@ export default function AiContentGenerator() {
                   name="keyFeatures"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Key Features/Benefits</FormLabel>
+                      <FormLabel>Principais Características/Benefícios</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="e.g., Fast, responsive, SEO-optimized"
+                          placeholder="Ex: Design moderno, alta durabilidade, iluminação LED"
                           {...field}
                         />
                       </FormControl>
@@ -146,23 +144,23 @@ export default function AiContentGenerator() {
                   name="tone"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Tone of Voice</FormLabel>
+                      <FormLabel>Tom de Voz</FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select a tone" />
+                            <SelectValue placeholder="Selecione um tom" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
                           <SelectItem value="professional">
-                            Professional
+                            Profissional
                           </SelectItem>
-                          <SelectItem value="friendly">Friendly</SelectItem>
-                          <SelectItem value="humorous">Humorous</SelectItem>
-                          <SelectItem value="persuasive">Persuasive</SelectItem>
+                          <SelectItem value="friendly">Amigável</SelectItem>
+                          <SelectItem value="humorous">Divertido</SelectItem>
+                          <SelectItem value="persuasive">Persuasivo</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -171,7 +169,7 @@ export default function AiContentGenerator() {
                 />
                 <Button type="submit" disabled={isPending} className="w-full">
                   <Sparkles className="mr-2 h-4 w-4" />
-                  {isPending ? 'Generating...' : 'Generate Copy'}
+                  {isPending ? 'Gerando...' : 'Gerar Texto'}
                 </Button>
               </form>
             </Form>
@@ -180,7 +178,7 @@ export default function AiContentGenerator() {
       </div>
       <div className="flex flex-col">
         <h3 className="font-headline text-2xl font-bold">
-          Your Generated Copy
+          Seu Texto Gerado
         </h3>
         <Card className="mt-4 flex-grow">
           <CardContent className="p-6">
@@ -198,7 +196,7 @@ export default function AiContentGenerator() {
             {!isPending && !generatedCopy && (
               <div className="flex h-full items-center justify-center text-center">
                 <p className="text-muted-foreground">
-                  Your generated marketing copy will appear here.
+                  Seu texto de marketing gerado aparecerá aqui.
                 </p>
               </div>
             )}

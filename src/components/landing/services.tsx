@@ -2,12 +2,12 @@
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
-  Megaphone,
-  Code,
+  Building,
+  Type,
   PenTool,
-  Target,
-  LineChart,
-  Component,
+  Lightbulb,
+  Printer,
+  Projector,
 } from 'lucide-react';
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
@@ -17,40 +17,40 @@ gsap.registerPlugin(ScrollTrigger);
 
 const services = [
   {
-    icon: <Megaphone className="h-8 w-8 text-primary" />,
-    title: 'Digital Marketing',
+    icon: <Building className="h-8 w-8 text-primary" />,
+    title: 'Fachadas em ACM',
     description:
-      "Amplify your brand's voice across all digital channels with data-driven strategies.",
+      "Modernize a frente do seu negócio com painéis de ACM de alta durabilidade e design sofisticado.",
   },
   {
-    icon: <Code className="h-8 w-8 text-primary" />,
-    title: 'Web Development',
+    icon: <Type className="h-8 w-8 text-primary" />,
+    title: 'Letras Caixa',
     description:
-      'Crafting beautiful, high-performance websites that captivate and convert.',
+      'Destaque sua marca com letras em relevo, com ou sem iluminação LED, para um visual impactante.',
+  },
+  {
+    icon: <Lightbulb className="h-8 w-8 text-primary" />,
+    title: 'Painéis Luminosos',
+    description:
+      'Garanta que sua marca seja vista a qualquer hora do dia com painéis e backlights de alta qualidade.',
+  },
+  {
+    icon: <Projector className="h-8 w-8 text-primary" />,
+    title: 'Totens',
+    description:
+      'Sinalize e reforce a presença da sua empresa com totens personalizados, com ou sem iluminação.',
+  },
+  {
+    icon: <Printer className="h-8 w-8 text-primary" />,
+    title: 'Impressão Digital',
+    description:
+      'Materialize suas ideias com impressão de alta resolução para adesivos, banners, lonas e muito mais.',
   },
   {
     icon: <PenTool className="h-8 w-8 text-primary" />,
-    title: 'Content Creation',
+    title: 'Criação e Projetos 3D',
     description:
-      'Engaging content that tells your story and connects with your audience.',
-  },
-  {
-    icon: <Target className="h-8 w-8 text-primary" />,
-    title: 'SEO & SEM',
-    description:
-      'Drive organic traffic and dominate search rankings to grow your business.',
-  },
-  {
-    icon: <LineChart className="h-8 w-8 text-primary" />,
-    title: 'Data Analytics',
-    description:
-      'Uncover actionable insights from your data to make smarter business decisions.',
-  },
-  {
-    icon: <Component className="h-8 w-8 text-primary" />,
-    title: 'Brand Strategy',
-    description:
-      'Building memorable brands that stand out in a crowded marketplace.',
+      'Desenvolvemos a identidade visual da sua marca e criamos projetos 3D para visualizar o resultado final.',
   },
 ];
 
@@ -103,11 +103,10 @@ export default function Services() {
     <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" ref={containerRef}>
       <div className="text-center">
         <h2 className="font-headline text-3xl font-extrabold tracking-tight sm:text-4xl">
-          Our Services
+          Nossos Serviços
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-          We provide a comprehensive suite of services to meet your business
-          needs.
+          Oferecemos um conjunto completo de soluções em comunicação visual para atender às necessidades do seu negócio.
         </p>
       </div>
       <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">

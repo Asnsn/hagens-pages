@@ -7,9 +7,9 @@ import {
 } from '@/ai/flows/generate-marketing-copy';
 
 const GenerateCopySchema = z.object({
-  productName: z.string().min(1, 'Product name is required.'),
-  targetAudience: z.string().min(1, 'Target audience is required.'),
-  keyFeatures: z.string().min(1, 'Key features are required.'),
+  productName: z.string().min(1, 'O nome do produto é obrigatório.'),
+  targetAudience: z.string().min(1, 'O público-alvo é obrigatório.'),
+  keyFeatures: z.string().min(1, 'As características são obrigatórias.'),
   tone: z.string(),
 });
 
@@ -20,7 +20,7 @@ export async function generateCopyAction(
 
   if (!validatedFields.success) {
     return {
-      error: 'Invalid input.',
+      error: 'Dados inválidos.',
     };
   }
 
@@ -31,15 +31,15 @@ export async function generateCopyAction(
   } catch (error) {
     console.error(error);
     return {
-      error: 'Failed to generate marketing copy. Please try again later.',
+      error: 'Falha ao gerar texto. Por favor, tente novamente mais tarde.',
     };
   }
 }
 
 const ContactFormSchema = z.object({
-  name: z.string().min(1, 'Name is required.'),
-  email: z.string().email('Invalid email address.'),
-  message: z.string().min(10, 'Message must be at least 10 characters long.'),
+  name: z.string().min(1, 'O nome é obrigatório.'),
+  email: z.string().email('Endereço de e-mail inválido.'),
+  message: z.string().min(10, 'A mensagem deve ter pelo menos 10 caracteres.'),
 });
 
 export async function submitContactFormAction(
@@ -49,16 +49,16 @@ export async function submitContactFormAction(
 
   if (!validatedFields.success) {
     return {
-      error: 'Invalid input.',
+      error: 'Dados inválidos.',
       fieldErrors: validatedFields.error.flatten().fieldErrors,
     };
   }
 
-  // Here you would typically send an email, save to a database, etc.
-  // For this example, we'll just log the data.
-  console.log('Contact form submitted:', validatedFields.data);
+  // Aqui você normalmente enviaria um e-mail, salvaria em um banco de dados, etc.
+  // Para este exemplo, vamos apenas registrar os dados.
+  console.log('Formulário de contato enviado:', validatedFields.data);
 
   return {
-    success: 'Thank you for your message! We will get back to you soon.',
+    success: 'Obrigado pela sua mensagem! Entraremos em contato em breve.',
   };
 }

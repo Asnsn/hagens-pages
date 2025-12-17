@@ -10,12 +10,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
-  { id: 'client-1', name: 'Project Alpha', category: 'Web Development' },
-  { id: 'client-2', name: 'Project Beta', category: 'Brand Strategy' },
-  { id: 'client-3', name: 'Project Gamma', category: 'Digital Marketing' },
-  { id: 'client-4', name: 'Project Delta', category: 'Data Analytics' },
-  { id: 'client-5', name: 'Project Epsilon', category: 'Content Creation' },
-  { id: 'client-6', name: 'Project Zeta', category: 'SEO & SEM' },
+  { id: 'client-1', name: 'Projeto Alpha', category: 'Fachada em ACM' },
+  { id: 'client-2', name: 'Projeto Beta', category: 'Letra Caixa' },
+  { id: 'client-3', name: 'Projeto Gamma', category: 'Painel Luminoso' },
+  { id: 'client-4', name: 'Projeto Delta', category: 'Sinalização Interna' },
+  { id: 'client-5', name: 'Projeto Epsilon', category: 'Totem Personalizado' },
+  { id: 'client-6', name: 'Projeto Zeta', category: 'Impressão Digital' },
 ];
 
 export default function ClientShowcase() {
@@ -48,11 +48,10 @@ export default function ClientShowcase() {
     <div className="overflow-hidden" ref={component}>
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center">
          <h2 className="font-headline text-3xl font-extrabold tracking-tight sm:text-4xl">
-          Our Work
+          Nosso Portfólio
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-          Take a look at some of the successful projects we've delivered for
-          our clients.
+          Confira alguns dos projetos de sucesso que entregamos para nossos clientes.
         </p>
       </div>
       <div
