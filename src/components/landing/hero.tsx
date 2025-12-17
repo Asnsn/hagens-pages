@@ -24,11 +24,13 @@ const ThinkBuildDeliverItem = ({ icon, title, description, color, className }) =
 );
 
 const ThinkIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 14L12 6L20 14" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M4 20L12 12L20 20" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4.5 10.5L12 3L19.5 10.5" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M18 9V21H6V9" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M12 21V15" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
 );
+
 
 const BuildIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -37,14 +39,13 @@ const BuildIcon = () => (
 );
 
 const DeliverIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="3" y="3" width="18" height="18" rx="2" stroke="black" strokeWidth="2" />
-    <rect x="7" y="7" width="4" height="4" rx="1" stroke="black" strokeWidth="2" />
-    <rect x="13" y="7" width="4" height="4" rx="1" stroke="black" strokeWidth="2" />
-    <rect x="7" y="13" width="4" height="4" rx="11" stroke="black" strokeWidth="2" />
-    <rect x="13" y="13" width="4" height="4" rx="1" stroke="black" strokeWidth="2" />
-  </svg>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M10 13L12 15L15 11" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M9 8L11 6L14 9" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
 );
+
 
 const VideoPlaceholder = () => (
     <motion.div 
@@ -90,8 +91,8 @@ export default function Hero() {
         duration: 0.8,
         ease: 'power3.out',
         scrollTrigger: {
-          trigger: '.tbd-item',
-          start: 'top 90%',
+          trigger: '.tbd-container',
+          start: 'top 80%',
           toggleActions: 'play none none none',
         }
       }
@@ -111,7 +112,7 @@ export default function Hero() {
               Inteligência de dados, criatividade e tecnologia para construir
               soluções inovadoras em cada etapa da jornada do cliente.
             </p>
-            <div className="mt-10 space-y-8">
+            <div className="mt-10 space-y-8 tbd-container">
               <ThinkBuildDeliverItem
                 icon={<ThinkIcon />}
                 title="THINK"

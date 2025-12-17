@@ -5,43 +5,27 @@ import { gsap } from 'gsap';
 
 const ConnectionParticles: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const isInitialized = useRef(false);
-
+  
   useEffect(() => {
-    if (isInitialized.current || !canvasRef.current) return;
-    isInitialized.current = true;
-
     const canvas = canvasRef.current;
+    if (!canvas) return;
+    
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    
+
+    let animationFrameId: number;
     let particlesArray: Particle[] = [];
     const mouse = {
       x: null as number | null,
       y: null as number | null,
       radius: 100,
     };
-    
-    let animationFrameId: number;
 
     const setCanvasSize = () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        mouse.radius = (canvas.height / 80) * (canvas.width / 80) * 0.5; // smaller radius
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      mouse.radius = (canvas.height / 80) * (canvas.width / 80) * 0.5;
     };
-
-    const handleMouseMove = (event: MouseEvent) => {
-      mouse.x = event.clientX;
-      mouse.y = event.clientY;
-    };
-
-    const handleMouseOut = () => {
-      mouse.x = null;
-      mouse.y = null;
-    };
-    
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseout', handleMouseOut);
 
     class Particle {
       x: number;
@@ -61,7 +45,6 @@ const ConnectionParticles: React.FC = () => {
       }
 
       draw() {
-        if (!ctx) return;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
         ctx.fillStyle = this.color;
@@ -81,18 +64,10 @@ const ConnectionParticles: React.FC = () => {
           let dy = mouse.y - this.y;
           let distance = Math.sqrt(dx * dx + dy * dy);
           if (distance < mouse.radius + this.size) {
-            if (mouse.x < this.x && this.x < canvas.width - this.size * 10) {
-              this.x += 3;
-            }
-            if (mouse.x > this.x && this.x > this.size * 10) {
-              this.x -= 3;
-            }
-            if (mouse.y < this.y && this.y < canvas.height - this.size * 10) {
-              this.y += 3;
-            }
-            if (mouse.y > this.y && this.y > this.size * 10) {
-              this.y -= 3;
-            }
+            if (mouse.x < this.x && this.x < canvas.width - this.size * 10) this.x += 3;
+            if (mouse.x > this.x && this.x > this.size * 10) this.x -= 3;
+            if (mouse.y < this.y && this.y < canvas.height - this.size * 10) this.y += 3;
+            if (mouse.y > this.y && this.y > this.size * 10) this.y -= 3;
           }
         }
 
@@ -118,7 +93,6 @@ const ConnectionParticles: React.FC = () => {
     }
 
     function connect() {
-      if (!ctx) return;
       let opacityValue = 1;
       const accentHsl = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
       const [h, s, l] = accentHsl.split(' ').map(val => parseFloat(val.replace('%', '')));
@@ -142,7 +116,6 @@ const ConnectionParticles: React.FC = () => {
     }
 
     function animate() {
-      if (!ctx) return;
       ctx.clearRect(0, 0, innerWidth, innerHeight);
       for (let i = 0; i < particlesArray.length; i++) {
         particlesArray[i].update();
@@ -150,27 +123,37 @@ const ConnectionParticles: React.FC = () => {
       connect();
       animationFrameId = requestAnimationFrame(animate);
     }
-    
+
+    const handleMouseMove = (event: MouseEvent) => {
+      mouse.x = event.clientX;
+      mouse.y = event.clientY;
+    };
+    const handleMouseOut = () => {
+      mouse.x = null;
+      mouse.y = null;
+    };
     const handleResize = () => {
         cancelAnimationFrame(animationFrameId);
         init();
         animate();
     };
-    
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseout', handleMouseOut);
     window.addEventListener('resize', handleResize);
+    
     init();
     animate();
 
     return () => {
-      window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseout', handleMouseOut);
+      window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameId);
-      isInitialized.current = false;
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10" />;
+  return <canvas ref={canvasRef} className="fixed top-0 left-0 -z-10" />;
 };
 
 export default ConnectionParticles;
