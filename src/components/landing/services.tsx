@@ -1,3 +1,5 @@
+'use client';
+import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Megaphone,
@@ -49,23 +51,24 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="services" className="bg-secondary py-16 sm:py-24">
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h2 className="font-headline text-3xl font-extrabold tracking-tight sm:text-4xl">
-            Our Services
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-            We provide a comprehensive suite of services to meet your business
-            needs.
-          </p>
-        </div>
-        <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((service, index) => (
-            <Card
-              key={index}
-              className="transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-xl"
-            >
+    <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="text-center">
+        <h2 className="font-headline text-3xl font-extrabold tracking-tight sm:text-4xl">
+          Our Services
+        </h2>
+        <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
+          We provide a comprehensive suite of services to meet your business
+          needs.
+        </p>
+      </div>
+      <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {services.map((service, index) => (
+          <motion.div
+            key={index}
+            whileHover={{ y: -8, scale: 1.02 }}
+            transition={{ type: 'spring', stiffness: 300 }}
+          >
+            <Card className="h-full transform transition-shadow duration-300 hover:shadow-xl">
               <CardHeader className="flex flex-row items-center gap-4">
                 {service.icon}
                 <CardTitle className="font-headline text-xl">
@@ -76,9 +79,9 @@ export default function Services() {
                 <p className="text-muted-foreground">{service.description}</p>
               </CardContent>
             </Card>
-          ))}
-        </div>
+          </motion.div>
+        ))}
       </div>
-    </section>
+    </div>
   );
 }
