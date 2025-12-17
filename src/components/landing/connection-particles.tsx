@@ -62,10 +62,12 @@ const ConnectionParticles = () => {
     };
 
     const connect = () => {
-      const accentHsl = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-      const [h, s, l] = accentHsl.split(' ').map(val => parseFloat(val.replace('%', '')));
+      let accentColorValue = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+      if (!accentColorValue) {
+        accentColorValue = '265 100% 68%'; // Fallback color
+      }
+      const [h, s, l] = accentColorValue.split(' ').map(val => parseFloat(val.replace('%', '')));
       
-      const connectColor = `hsla(${h}, ${s}%, ${l}%, 0.5)`; // Usando a cor roxa
 
       for (let a = 0; a < particles.length; a++) {
         for (let b = a; b < particles.length; b++) {
