@@ -164,7 +164,9 @@ const ConnectionParticles: React.FC = () => {
       gsap.ticker.remove(animate);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
-      canvas.removeEventListener('mouseout', handleMouseOut);
+      if(canvas) {
+        canvas.removeEventListener('mouseout', handleMouseOut);
+      }
     };
   }, []);
 
