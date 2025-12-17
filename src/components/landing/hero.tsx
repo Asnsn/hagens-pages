@@ -50,36 +50,22 @@ const DeliverIcon = () => (
 );
 
 
-const VideoPlaceholder = () => (
+const YouTubeVideo = () => (
     <motion.div 
-        className="relative aspect-video w-full max-w-xl cursor-pointer overflow-hidden rounded-lg bg-black"
+        className="relative aspect-video w-full max-w-2xl overflow-hidden rounded-lg bg-black shadow-2xl"
         initial={{ opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.7, delay: 0.5 }}
     >
-        <div className="absolute inset-0 flex items-center justify-center">
-            <div className="absolute h-full w-full bg-black"></div>
-            <span className="z-10 text-xl font-bold tracking-widest text-white" style={{color: '#F923C7'}}>#WEAREHAGENS</span>
-            <div className="absolute flex h-20 w-20 items-center justify-center rounded-full bg-white/80 backdrop-blur-sm transition-transform duration-300 hover:scale-110">
-                <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="ml-1"
-                >
-                    <path
-                        d="M5 4L19 12L5 20V4Z"
-                        stroke="black"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    />
-                </svg>
-            </div>
-        </div>
+        <iframe
+            className="absolute top-0 left-0 h-full w-full"
+            src="https://www.youtube.com/embed/gkwMIucVTPk?autoplay=1&mute=1&loop=1&playlist=gkwMIucVTPk&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1"
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+        ></iframe>
     </motion.div>
 );
 
@@ -142,7 +128,7 @@ export default function Hero() {
           </div>
           
           <div className="flex items-center justify-center">
-            <VideoPlaceholder />
+            <YouTubeVideo />
           </div>
         </div>
       </div>
