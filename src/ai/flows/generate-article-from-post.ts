@@ -10,7 +10,6 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
-import { googleAI } from '@genkit-ai/google-genai';
 
 const GenerateArticleInputSchema = z.object({
   caption: z.string().describe('The text content or caption of the Instagram post.'),
@@ -58,7 +57,7 @@ const generateArticleFromPostFlow = ai.defineFlow(
     name: 'generateArticleFromPostFlow',
     inputSchema: GenerateArticleInputSchema,
     outputSchema: GenerateArticleOutputSchema,
-    model: googleAI.model('gemini-pro-vision'),
+    model: 'gemini-pro-vision',
   },
   async (input) => {
     const { output } = await prompt(input);

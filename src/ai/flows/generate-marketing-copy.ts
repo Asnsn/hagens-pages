@@ -10,7 +10,6 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { googleAI } from '@genkit-ai/google-genai';
 
 const GenerateMarketingCopyInputSchema = z.object({
   productName: z.string().describe('The name of the product or service.'),
@@ -55,7 +54,7 @@ const generateMarketingCopyFlow = ai.defineFlow(
     name: 'generateMarketingCopyFlow',
     inputSchema: GenerateMarketingCopyInputSchema,
     outputSchema: GenerateMarketingCopyOutputSchema,
-    model: googleAI.model('gemini-2.5-flash'),
+    model: 'gemini-2.5-flash',
   },
   async input => {
     const {output} = await prompt(input);
