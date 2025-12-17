@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40" width="200" height="40">
+  <style>
+    .loccitane-text {
+      font-family: 'Garamond', 'Times New Roman', serif;
+      font-size: 16px;
+      fill: white;
+      letter-spacing: 1px;
+    }
+    .subtext {
+      font-size: 10px;
+    }
+  </style>
+  <text x="0" y="18" class="loccitane-text">L'OCCITANE</text>
+  <text x="0" y="32" class="loccitane-text subtext">EN PROVENCE</text>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 20" fill="white" width="150" height="20">
+  <style>
+    .tf-text {
+      font-family: 'Helvetica', 'Arial', sans-serif;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  </style>
+  <text x="0" y="15" class="tf-text">TRACK & FIELD</text>
+</svg>

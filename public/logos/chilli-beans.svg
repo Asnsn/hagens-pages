@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 30" width="160" height="30">
+  <style>
+    .chilli-text {
+      font-family: 'Arial Black', Gadget, sans-serif;
+      font-size: 24px;
+      fill: white;
+    }
+    .chilli-pepper {
+      fill: red;
+    }
+  </style>
+  <text x="0" y="22" class="chilli-text">CHILLI</text>
+  <g transform="translate(95, 0)">
+    <path class="chilli-pepper" d="M10,0 C-10,15 5,30 10,30 C15,30 30,15 10,0 Z"/>
+    <path d="M8,0 C10,5 12,5 14,0" stroke="green" stroke-width="2" fill="none"/>
+  </g>
+  <text x="115" y="22" class="chilli-text">BEANS</text>
+</svg>

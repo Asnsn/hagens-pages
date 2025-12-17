@@ -2,13 +2,14 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Bot, Menu } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { HagensLogo } from './hagens-logo';
 
 const navLinks = [
   { href: '#servicos', label: 'Serviços' },
-  { href: '#projetos', label: 'Projetos' },
+  { href: '#projetos', label: 'Clientes' },
   { href: '#depoimentos', label: 'Depoimentos' },
   { href: '#contato', label: 'Contato' },
 ];
@@ -20,8 +21,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm">
       <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2">
-          <Bot className="h-7 w-7 text-primary" />
-          <span className="font-headline text-2xl font-bold">Hagens</span>
+          <HagensLogo className="h-7" />
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
@@ -54,10 +54,7 @@ export default function Header() {
                   className="mb-6 flex items-center gap-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <Bot className="h-7 w-7 text-primary" />
-                  <span className="font-headline text-2xl font-bold">
-                    Hagens
-                  </span>
+                  <HagensLogo className="h-7" />
                 </Link>
                 <nav className="flex flex-col gap-4">
                   {navLinks.map(link => (
