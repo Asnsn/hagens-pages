@@ -4,6 +4,7 @@ import React, { useRef, useEffect } from 'react';
 
 const ConnectionParticles: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationFrameId = useRef<number>();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -13,31 +14,32 @@ const ConnectionParticles: React.FC = () => {
     if (!ctx) return;
 
     let particlesArray: Particle[] = [];
-    let animationFrameId: number;
-
+    
     const setCanvasSize = () => {
-      const parent = canvas.parentElement;
-      if (parent) {
-        canvas.width = parent.offsetWidth;
-        canvas.height = parent.offsetHeight;
-      } else {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      }
+        const parent = canvas.parentElement;
+        if(parent) {
+            canvas.width = parent.offsetWidth;
+            canvas.height = parent.offsetHeight;
+        }
     };
-
+    
     const mouse = {
       x: null as number | null,
       y: null as number | null,
-      radius: 150,
+      radius: (canvas.height / 80) * (canvas.width / 80),
     };
 
     const handleMouseMove = (event: MouseEvent) => {
       mouse.x = event.clientX;
       mouse.y = event.clientY;
     };
-
     window.addEventListener('mousemove', handleMouseMove);
+
+    const handleMouseOut = () => {
+        mouse.x = null;
+        mouse.y = null;
+    }
+    window.addEventListener('mouseout', handleMouseOut);
 
     class Particle {
       x: number;
@@ -60,8 +62,7 @@ const ConnectionParticles: React.FC = () => {
         if (!ctx) return;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-        const isDark = document.documentElement.classList.contains('dark');
-        ctx.fillStyle = isDark ? 'hsl(var(--foreground))' : 'hsl(var(--muted-foreground))';
+        ctx.fillStyle = this.color;
         ctx.fill();
       }
 
@@ -80,16 +81,16 @@ const ConnectionParticles: React.FC = () => {
           let distance = Math.sqrt(dx * dx + dy * dy);
           if (distance < mouse.radius + this.size) {
               if (mouse.x < this.x && this.x < canvas.width - this.size * 10) {
-                  this.x += 1;
+                  this.x += 3;
               }
               if (mouse.x > this.x && this.x > this.size * 10) {
-                  this.x -= 1;
+                  this.x -= 3;
               }
               if (mouse.y < this.y && this.y < canvas.height - this.size * 10) {
-                  this.y += 1;
+                  this.y += 3;
               }
               if (mouse.y > this.y && this.y > this.size * 10) {
-                  this.y -= 1;
+                  this.y -= 3;
               }
           }
         }
@@ -102,15 +103,16 @@ const ConnectionParticles: React.FC = () => {
 
     function init() {
       if (!canvas) return;
+      setCanvasSize();
       particlesArray = [];
       let numberOfParticles = (canvas.height * canvas.width) / 9000;
-      for (let i = 0; i < numberOfParticles * 0.5; i++) {
+      for (let i = 0; i < numberOfParticles; i++) {
         let size = Math.random() * 2 + 1;
-        let x = Math.random() * (canvas.width - size * 2) + size * 2;
-        let y = Math.random() * (canvas.height - size * 2) + size * 2;
+        let x = Math.random() * (canvas.width - size * 2 - size * 2) + size * 2;
+        let y = Math.random() * (canvas.height - size * 2 - size * 2) + size * 2;
         let directionX = Math.random() * 0.4 - 0.2;
         let directionY = Math.random() * 0.4 - 0.2;
-        let color = 'hsl(var(--foreground))';
+        let color = document.documentElement.classList.contains('dark') ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)';
         
         particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
       }
@@ -122,14 +124,14 @@ const ConnectionParticles: React.FC = () => {
       for (let a = 0; a < particlesArray.length; a++) {
         for (let b = a; b < particlesArray.length; b++) {
           let distance =
-            (particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x) +
-            (particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y);
+            ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) +
+            ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+          
           if (distance < (canvas.width / 7) * (canvas.height / 7)) {
-            opacityValue = 1 - distance / 20000;
-            const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent');
-            let [h, s, l] = accentColor.split(' ').map(parseFloat);
-            ctx.strokeStyle = `hsla(${h}, ${s}%, ${l}%, ${opacityValue * 0.5})`;
-            
+            opacityValue = 1 - (distance / 20000);
+            let accentHsl = getComputedStyle(document.documentElement).getPropertyValue('--accent');
+            let [h,s,l] = accentHsl.split(' ').map(parseFloat);
+            ctx.strokeStyle = `hsla(${h}, ${s}%, ${l}%, ${opacityValue * 0.3})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
@@ -142,44 +144,35 @@ const ConnectionParticles: React.FC = () => {
 
     function animate() {
       if (!ctx || !canvas) return;
-      
-      const isDark = document.documentElement.classList.contains('dark');
-      // Get background color from CSS variables
-      const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--background');
-      ctx.fillStyle = `hsl(${bgColor})`;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       for (let i = 0; i < particlesArray.length; i++) {
         particlesArray[i].update();
       }
       connect();
-      animationFrameId = requestAnimationFrame(animate);
+      animationFrameId.current = requestAnimationFrame(animate);
     }
 
     const handleResize = () => {
-      setCanvasSize();
+      if(animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
       init();
+      animate();
     };
 
     window.addEventListener('resize', handleResize);
 
-    const handleMouseOut = () => {
-        mouse.x = null;
-        mouse.y = null;
-    }
-
-    document.body.addEventListener('mouseleave', handleMouseOut)
-
-    setCanvasSize();
     init();
     animate();
 
-
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      if(animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
-      document.body.removeEventListener('mouseleave', handleMouseOut);
+      window.removeEventListener('mouseout', handleMouseOut);
     };
   }, []);
 
