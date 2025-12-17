@@ -4,7 +4,6 @@ import React, { useRef, useEffect } from 'react';
 
 const ConnectionParticles: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationFrameId = useRef<number>();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -40,7 +39,7 @@ const ConnectionParticles: React.FC = () => {
         mouse.x = null;
         mouse.y = null;
     }
-    window.addEventListener('mouseout', handleMouseOut);
+    canvas.addEventListener('mouseout', handleMouseOut);
 
     class Particle {
       x: number;
@@ -108,11 +107,11 @@ const ConnectionParticles: React.FC = () => {
       particlesArray = [];
       let numberOfParticles = (canvas.height * canvas.width) / 9000;
       for (let i = 0; i < numberOfParticles; i++) {
-        let size = Math.random() * 2 + 1;
-        let x = Math.random() * (canvas.width - size * 2) + size * 2;
-        let y = Math.random() * (canvas.height - size * 2) + size * 2;
-        let directionX = Math.random() * 0.4 - 0.2;
-        let directionY = Math.random() * 0.4 - 0.2;
+        let size = (Math.random() * 2) + 1;
+        let x = (Math.random() * ((canvas.width - size * 2) - (size * 2)) + size * 2);
+        let y = (Math.random() * ((canvas.height - size * 2) - (size * 2)) + size * 2);
+        let directionX = (Math.random() * .2) - .1;
+        let directionY = (Math.random() * .2) - .1;
         let color = document.documentElement.classList.contains('dark') ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)';
         
         particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
@@ -143,6 +142,7 @@ const ConnectionParticles: React.FC = () => {
       }
     }
 
+    let animationFrameId: number;
     function animate() {
       if (!ctx || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -151,15 +151,13 @@ const ConnectionParticles: React.FC = () => {
         particlesArray[i].update();
       }
       connect();
-      animationFrameId.current = requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
     }
-
+    
     const handleResize = () => {
-      if(animationFrameId.current) {
-        cancelAnimationFrame(animationFrameId.current);
-      }
-      init();
-      animate();
+        cancelAnimationFrame(animationFrameId);
+        init();
+        animate();
     };
 
     window.addEventListener('resize', handleResize);
@@ -168,12 +166,10 @@ const ConnectionParticles: React.FC = () => {
     animate();
 
     return () => {
-      if(animationFrameId.current) {
-        cancelAnimationFrame(animationFrameId.current);
-      }
+      cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseout', handleMouseOut);
+      canvas.removeEventListener('mouseout', handleMouseOut);
     };
   }, []);
 
