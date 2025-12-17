@@ -3,43 +3,74 @@
 import React, { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 
+// Paths for the icons, all with the same number of points for smooth morphing.
+const paths = {
+  h: 'M10 0 L10 12 L22 12 L22 17 L10 17 L10 29 L5 29 L5 17 L-7 17 L-7 12 L5 12 L5 0 Z',
+  data: 'M0 14.5 L16 29 L32 14.5 L16 0 Z M16 5 L27 14.5 L16 24 L5 14.5 Z',
+  star: 'M16 0 L20 10 L31 12 L23 20 L25 30 L16 25 L7 30 L9 20 L-1 12 L12 10 Z',
+  check: 'M-2 15 L10 27 L34 3 L28 -3 L10 15 L4 9 Z',
+};
+
 const SvgMorphSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const hexagonRef = useRef<SVGPathElement>(null);
-  const letterHRef = useRef<SVGTextElement>(null);
+  const morphPathRef = useRef<SVGPathElement>(null);
 
   useEffect(() => {
-    if (!sectionRef.current || !hexagonRef.current || !letterHRef.current) return;
+    if (!sectionRef.current || !morphPathRef.current) return;
+
+    // Center the initial shape
+    gsap.set(morphPathRef.current, {
+      transformOrigin: 'center center',
+      scale: 1.5, // Make the icon a bit larger
+    });
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: 'top center',
-        end: 'bottom center',
-        scrub: true,
+        start: 'top 80%', // Start animation when the top of the section is 80% down the viewport
+        toggleActions: 'play none none none',
       },
+      repeat: -1, // Loop indefinitely
+      repeatDelay: 1, // Pause for 1 second between loops
     });
 
-    // Set initial state
-    gsap.set([hexagonRef.current, letterHRef.current], { transformOrigin: 'center center' });
-
-    // Animate hexagon rotation
-    tl.to(hexagonRef.current, {
-      rotationY: 360,
-      ease: 'none',
-    }, 0);
-    
-    // Animate H letter with a parallax effect
-    tl.to(letterHRef.current, {
-        x: (i, target) => (target.getBoundingClientRect().width * 1.5), // Move H to the right
-        ease: 'power1.inOut'
-    }, 0);
-
-     tl.to(letterHRef.current, {
-        x: 0, // Move H back to original position
-        ease: 'power1.inOut'
-    }, '>-0.5');
-
+    // Morphing sequence
+    tl.to(
+      morphPathRef.current,
+      {
+        attr: { d: paths.h },
+        duration: 1,
+        ease: 'power2.inOut',
+      },
+      '+=1' // Wait 1 second before starting
+    )
+      .to(
+        morphPathRef.current,
+        {
+          attr: { d: paths.data },
+          duration: 1,
+          ease: 'power2.inOut',
+        },
+        '+=1'
+      )
+      .to(
+        morphPathRef.current,
+        {
+          attr: { d: paths.star },
+          duration: 1,
+          ease: 'power2.inOut',
+        },
+        '+=1'
+      )
+      .to(
+        morphPathRef.current,
+        {
+          attr: { d: paths.check },
+          duration: 1,
+          ease: 'power2.inOut',
+        },
+        '+=1'
+      );
 
     return () => {
       tl.kill();
@@ -58,30 +89,17 @@ const SvgMorphSection = () => {
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
           Transformamos ideias em soluções, conectando estratégia e tecnologia.
         </p>
-        <div className="mt-12" style={{ width: '200px', height: '150px' }}>
+        <div className="mt-12 flex h-[150px] w-[200px] items-center justify-center">
           <svg
-            viewBox="0 0 70 40"
-            className="w-full h-full"
+            viewBox="-15 -5 60 45" // Adjusted viewBox to fit all shapes nicely
+            className="h-full w-full"
             xmlns="http://www.w3.org/2000/svg"
           >
-            {/* Hexagon with cutout */}
             <path
-              ref={hexagonRef}
-              d="M30 2 L15 10 L15 28 L30 36 L45 28 L45 10 Z M30 7 L42 12 L42 26 L30 31 L18 26 L18 12 Z"
+              ref={morphPathRef}
+              d={paths.h} // Start with the H shape
               fill="hsl(var(--accent))"
             />
-            {/* H letter */}
-            <text
-                ref={letterHRef}
-                x="50"
-                y="26"
-                fontFamily="Space Grotesk, sans-serif"
-                fontSize="20"
-                fontWeight="bold"
-                fill="hsl(var(--primary))"
-            >
-                H
-            </text>
           </svg>
         </div>
       </div>
