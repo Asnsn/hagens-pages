@@ -74,24 +74,25 @@ const ConnectionParticles: React.FC = () => {
           this.directionY = -this.directionY;
         }
         
-        let dx = (mouse.x ?? -Infinity) - this.x;
-        let dy = (mouse.y ?? -Infinity) - this.y;
-        let distance = Math.sqrt(dx * dx + dy * dy);
-        if (distance < mouse.radius + this.size) {
-            if (this.x < (mouse.x ?? 0) && this.x > this.size * 10) {
-                this.x -= 1;
-            }
-            if (this.x > (mouse.x ?? 0) && this.x < canvas.width - this.size * 10) {
-                this.x += 1;
-            }
-            if (this.y < (mouse.y ?? 0) && this.y > this.size * 10) {
-                this.y -= 1;
-            }
-            if (this.y > (mouse.y ?? 0) && this.y < canvas.height - this.size * 10) {
-                this.y += 1;
-            }
+        if (mouse.x !== null && mouse.y !== null) {
+          let dx = mouse.x - this.x;
+          let dy = mouse.y - this.y;
+          let distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance < mouse.radius + this.size) {
+              if (mouse.x < this.x && this.x < canvas.width - this.size * 10) {
+                  this.x += 1;
+              }
+              if (mouse.x > this.x && this.x > this.size * 10) {
+                  this.x -= 1;
+              }
+              if (mouse.y < this.y && this.y < canvas.height - this.size * 10) {
+                  this.y += 1;
+              }
+              if (mouse.y > this.y && this.y > this.size * 10) {
+                  this.y -= 1;
+              }
+          }
         }
-
 
         this.x += this.directionX;
         this.y += this.directionY;
@@ -143,11 +144,9 @@ const ConnectionParticles: React.FC = () => {
       if (!ctx || !canvas) return;
       
       const isDark = document.documentElement.classList.contains('dark');
-      if(isDark) {
-          ctx.fillStyle = 'hsl(0 0% 3.9%)';
-      } else {
-          ctx.fillStyle = 'hsl(0 0% 100%)';
-      }
+      // Get background color from CSS variables
+      const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--background');
+      ctx.fillStyle = `hsl(${bgColor})`;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       for (let i = 0; i < particlesArray.length; i++) {
