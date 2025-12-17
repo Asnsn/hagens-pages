@@ -4,7 +4,7 @@ import { HagensLogo } from './hagens-logo';
 
 export default function Footer() {
   return (
-    <footer className="border-t">
+    <footer className="border-t border-white/10">
       <div className="container mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-4 py-8 sm:flex-row sm:px-6 lg:px-8">
         <div className="flex items-center gap-3">
           <HagensLogo className="h-6" />

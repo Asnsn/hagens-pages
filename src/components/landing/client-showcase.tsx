@@ -32,9 +32,9 @@ export default function ClientShowcase() {
         </div>
         <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
           {clients.map((client) => (
-            <Card key={client.id} className="group flex items-center justify-center p-4 transition-transform duration-300 hover:scale-105 hover:shadow-lg">
+            <Card key={client.id} className="group flex items-center justify-center p-4 transition-transform duration-300 hover:scale-105 hover:shadow-lg bg-white/5 border-white/10">
               <CardContent className="p-0">
-                <div className="relative h-16 w-32">
+                <div className="relative h-16 w-32 grayscale hover:grayscale-0 transition-all duration-300">
                   <Image
                     src={client.logo}
                     alt={client.name}

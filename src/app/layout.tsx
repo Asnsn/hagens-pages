@@ -3,9 +3,9 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'Hagens | Comunicação Visual',
+  title: 'Hagens | Think, Build, Deliver.',
   description:
-    'Hagens - Especialistas em comunicação visual, fachadas em ACM, letras caixa e mais.',
+    'Hagens - Inteligência de dados, criatividade e tecnologia para construir soluções inovadoras.',
 };
 
 export default function RootLayout({
@@ -27,7 +27,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-body antialiased">
+      <body className="font-body antialiased bg-background text-foreground">
         {children}
         <Toaster />
       </body>

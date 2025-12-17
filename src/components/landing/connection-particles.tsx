@@ -19,11 +19,13 @@ const ConnectionParticles: React.FC = () => {
       y: null as number | null,
       radius: 150,
     };
+    
+    let animationFrameId: number;
 
     const setCanvasSize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      mouse.radius = (canvas.height / 80) * (canvas.width / 80);
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        mouse.radius = (canvas.height / 80) * (canvas.width / 80);
     };
 
     const handleMouseMove = (event: MouseEvent) => {
@@ -144,22 +146,24 @@ const ConnectionParticles: React.FC = () => {
         particlesArray[i].update();
       }
       connect();
+      animationFrameId = requestAnimationFrame(animate);
     }
     
-    gsap.ticker.add(animate);
-
     const handleResize = () => {
-      init();
+        cancelAnimationFrame(animationFrameId);
+        init();
+        animate();
     };
     
     window.addEventListener('resize', handleResize);
     init();
+    animate();
 
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseout', handleMouseOut);
-      gsap.ticker.remove(animate);
+      cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
