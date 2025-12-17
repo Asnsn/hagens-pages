@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
+import CursorFollower from '@/components/landing/cursor-follower';
 
 export const metadata: Metadata = {
   title: 'Hagens | Think, Build, Deliver.',
@@ -28,6 +29,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-body antialiased bg-background text-foreground">
+        <CursorFollower />
         {children}
         <Toaster />
       </body>
