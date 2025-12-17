@@ -59,9 +59,9 @@ export async function submitContactFormAction(
     };
   }
 
-  // Aqui você normalmente enviaria um e-mail, salvaria em um banco de dados, etc.
-  // Para este exemplo, vamos apenas registrar os dados.
-  console.log('Formulário de contato enviado:', validatedFields.data);
+  // Here you would normally send an email, save to a database, etc.
+  // For this example, we'll just log the data.
+  console.log('Contact form submitted:', validatedFields.data);
 
   return {
     success: 'Obrigado pela sua mensagem! Entraremos em contato em breve.',
