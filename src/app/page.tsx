@@ -7,6 +7,7 @@ import Footer from '@/components/landing/footer';
 import AnimatedSection from '@/components/landing/animated-section';
 import HorizontalScrollGallery from '@/components/landing/horizontal-scroll-gallery';
 import ConnectionParticles from '@/components/landing/connection-particles';
+import SvgMorphSection from '@/components/landing/svg-morph-section';
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <main className="flex-grow">
         <Hero />
         <HorizontalScrollGallery id="work" />
+        <SvgMorphSection />
         <AnimatedSection id="clientes">
            <ClientShowcase />
         </AnimatedSection>

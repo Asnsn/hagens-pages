@@ -28,9 +28,7 @@ const ThinkBuildDeliverItem = ({ icon, title, description, color, className }) =
 
 const ThinkIcon = () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4.5 10.5L12 3L19.5 10.5" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M18 9V21H6V9" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M12 21V15" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M12 2L2 7V17L12 22L22 17V7L12 2ZM12 4.5L19.5 9L12 13.5L4.5 9L12 4.5ZM19.5 10.5L12 15L4.5 10.5M19.5 13.5L12 18L4.5 13.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
 );
 
