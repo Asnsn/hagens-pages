@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import CursorFollower from '@/components/landing/cursor-follower';
+import { TransitionProvider } from '@/context/TransitionContext';
+import PageTransition from '@/components/landing/page-transition';
 
 export const metadata: Metadata = {
   title: 'Hagens | Think, Build, Deliver.',
@@ -28,10 +30,13 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-body antialiased bg-background text-foreground">
-        <CursorFollower />
-        {children}
-        <Toaster />
+      <body className="font-body antialiased text-foreground">
+        <TransitionProvider>
+          <CursorFollower />
+          <PageTransition />
+          {children}
+          <Toaster />
+        </TransitionProvider>
       </body>
     </html>
   );

@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { HagensLogo } from './hagens-logo';
 import { gsap } from 'gsap';
+import { useTransitionContext } from '@/context/TransitionContext';
 
 const navLinks = [
   { href: '#servicos', label: 'Serviços / Produtos' },
@@ -18,6 +19,17 @@ const navLinks = [
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
+  const { playTransition } = useTransitionContext();
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    playTransition(href);
+  };
+  
+  const handleMobileLinkClick = (href: string) => {
+    setIsMenuOpen(false);
+    playTransition(href);
+  };
 
   useEffect(() => {
     const nav = navRef.current;
@@ -83,19 +95,20 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-background/95 backdrop-blur-sm">
       <div className="container mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2" onClick={(e) => handleLinkClick(e, '/')}>
           <HagensLogo className="h-7" />
         </Link>
 
         <nav ref={navRef} className="hidden items-center gap-8 md:flex">
           {navLinks.map(link => (
-            <Link
+            <a
               key={link.href}
               href={link.href}
-              className="nav-link-item group flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              onClick={(e) => handleLinkClick(e, link.href)}
+              className="nav-link-item group flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-primary cursor-pointer"
             >
               <span>{link.label}</span>
-            </Link>
+            </a>
           ))}
         </nav>
 
@@ -113,23 +126,29 @@ export default function Header() {
             </SheetTrigger>
             <SheetContent side="right" className="bg-background">
               <div className="flex flex-col gap-6 p-6">
-                <Link
+                <a
                   href="/"
                   className="mb-6 flex items-center gap-2"
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleMobileLinkClick('/');
+                  }}
                 >
                   <HagensLogo className="h-7" />
-                </Link>
+                </a>
                 <nav className="flex flex-col gap-4">
                   {navLinks.map(link => (
-                    <Link
+                    <a
                       key={link.href}
                       href={link.href}
                       className="text-lg font-medium text-muted-foreground transition-colors hover:text-primary"
-                      onClick={() => setIsMenuOpen(false)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleMobileLinkClick(link.href);
+                      }}
                     >
                       {link.label}
-                    </Link>
+                    </a>
                   ))}
                 </nav>
                  <Button variant="ghost" size="icon" className="mt-4">
