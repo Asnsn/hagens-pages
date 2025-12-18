@@ -22,7 +22,6 @@ const SvgMorphSection = () => {
 
     gsap.set(morphPathRef.current, {
       transformOrigin: 'center center',
-      scale: 1.5,
     });
 
     const tl = gsap.timeline({
@@ -37,7 +36,7 @@ const SvgMorphSection = () => {
 
     // Morphing sequence
     tl.to(morphPathRef.current, { attr: { d: paths.h }, duration: 1, ease: 'power2.inOut' }, '+=1.5')
-      .to(morphPathRef.current, { attr: { d: paths.database }, duration: 1, ease: 'power2.inOut' }, '+=1.5')
+      .to(morphPath-Ref.current, { attr: { d: paths.database }, duration: 1, ease: 'power2.inOut' }, '+=1.5')
       .to(morphPathRef.current, { attr: { d: paths.star }, duration: 1, ease: 'power2.inOut' }, '+=1.5')
       .to(morphPathRef.current, { attr: { d: paths.check }, duration: 1, ease: 'power2.inOut' }, '+=1.5');
 
