@@ -3,13 +3,12 @@
 import React, { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 
-// Redesigned paths with the SAME number of points for smooth morphing.
-// Each shape has 10 points.
+// Paths with the same number of points for smooth morphing
 const paths = {
-  h: "M0,25 L0,0 5,0 5,11 17,11 17,0 22,0 22,25 17,25 17,14 5,14 5,25 Z",
-  data: "M11,0 L22,12.5 11,25 0,12.5 0,12.5 0,12.5 0,12.5 0,12.5 0,12.5 0,12.5 Z",
-  star: "M11,0 L14,8 22,9 16,15 17.5,24 11,20 4.5,24 6,15 0,9 9,8 Z",
-  check: "M0,13 L8,21 22,7 19,4 8,15 3,10 3,10 3,10 3,10 3,10 Z",
+  h: "M0 25 V0 H5 V11 H17 V0 H22 V25 H17 V14 H5 V25 H0Z",
+  data: "M11 0 L22 12.5 L11 25 L0 12.5 L0 12.5 L0 12.5 L0 12.5 L0 12.5Z",
+  star: "M11 0 L14 8 L22 9 L16 15 L17.5 24 L11 20 L4.5 24 L6 15 L0 9 L9 8Z",
+  check: "M0 13 L8 21 L22 7 L19 4 L8 15 L3 10 L3 10 L3 10 L3 10Z",
 };
 
 const SvgMorphSection = () => {
@@ -17,60 +16,28 @@ const SvgMorphSection = () => {
   const morphPathRef = useRef<SVGPathElement>(null);
 
   useEffect(() => {
-    if (!sectionRef.current || !morphPathhRef.current) return;
+    if (!sectionRef.current || !morphPathRef.current) return;
 
     gsap.set(morphPathRef.current, {
       transformOrigin: 'center center',
-      scale: 2.5, // Increase size for better visibility
+      scale: 2.5,
     });
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
         start: 'top 80%',
-        toggleActions: 'play none none none',
+        toggleActions: 'play none none reset',
       },
       repeat: -1,
-      repeatDelay: 1.5, // Pause between loops
+      repeatDelay: 1.5,
     });
 
     // Morphing sequence
-    tl.to(
-      morphPathRef.current,
-      {
-        attr: { d: paths.h },
-        duration: 1,
-        ease: 'power2.inOut',
-      },
-      'start' // Start immediately
-    )
-    .to(
-      morphPathRef.current,
-      {
-        attr: { d: paths.data },
-        duration: 1,
-        ease: 'power2.inOut',
-      },
-      '+=1.5' // Wait 1.5s
-    )
-    .to(
-      morphPathRef.current,
-      {
-        attr: { d: paths.star },
-        duration: 1,
-        ease: 'power2.inOut',
-      },
-      '+=1.5' // Wait 1.5s
-    )
-    .to(
-      morphPathRef.current,
-      {
-        attr: { d: paths.check },
-        duration: 1,
-        ease: 'power2.inOut',
-      },
-      '+=1.5' // Wait 1.5s
-    );
+    tl.to(morphPathRef.current, { attr: { d: paths.h }, duration: 1, ease: 'power2.inOut' }, '+=1.5')
+      .to(morphPathRef.current, { attr: { d: paths.data }, duration: 1, ease: 'power2.inOut' }, '+=1.5')
+      .to(morphPathRef.current, { attr: { d: paths.star }, duration: 1, ease: 'power2.inOut' }, '+=1.5')
+      .to(morphPathRef.current, { attr: { d: paths.check }, duration: 1, ease: 'power2.inOut' }, '+=1.5');
 
     return () => {
       tl.kill();
@@ -91,13 +58,13 @@ const SvgMorphSection = () => {
         </p>
         <div className="mt-12 flex h-[150px] w-[200px] items-center justify-center">
           <svg
-            viewBox="-5 -5 32 35" // Adjusted viewBox for new shapes
+            viewBox="-5 -5 32 35"
             className="h-full w-full"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
               ref={morphPathRef}
-              d={paths.h} // Start with the H shape
+              d={paths.check} 
               fill="hsl(var(--accent))"
             />
           </svg>
