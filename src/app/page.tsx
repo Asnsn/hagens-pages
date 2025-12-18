@@ -17,7 +17,6 @@ import {
   MapPin,
 } from 'lucide-react';
 import Image from 'next/image';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import ContactForm from '@/components/landing/contact-form';
 
 const ServiceCard = ({ icon, title, description, delay }) => {
@@ -31,8 +30,6 @@ const ServiceCard = ({ icon, title, description, delay }) => {
 };
 
 export default function Home() {
-  const aboutImage =
-    PlaceHolderImages.find(img => img.id === 'client-5') || PlaceHolderImages[0];
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -99,11 +96,11 @@ export default function Home() {
               </div>
               <div className="relative h-80 w-full overflow-hidden rounded-lg shadow-lg lg:h-96">
                 <Image
-                  src={aboutImage.imageUrl}
-                  alt={aboutImage.description}
+                  src="/logos/sobre-nos.webp"
+                  alt="Imagem do escritório da Hagens, mostrando um ambiente moderno com divisórias de vidro."
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  data-ai-hint={aboutImage.imageHint}
+                  data-ai-hint="office workspace"
                   className="object-cover"
                 />
               </div>
