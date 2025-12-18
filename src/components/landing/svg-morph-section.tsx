@@ -6,9 +6,9 @@ import { gsap } from 'gsap';
 // Paths with the same number of points for smooth morphing
 const paths = {
   h: "M5 25 V0 H10 V11 H22 V0 H27 V25 H22 V14 H10 V25 H5Z",
-  data: "M16 0 L27 12.5 L16 25 L5 12.5 L5 12.5 L5 12.5 L5 12.5 L5 12.5Z",
+  data: "M16 0 L27 12.5 L16 25 L5 12.5 L16 0 L16 0 L16 0 L16 0 L16 0Z",
   star: "M16 0 L19 8 L27 9 L21 15 L22.5 24 L16 20 L9.5 24 L11 15 L5 9 L14 8Z",
-  check: "M5 13 L13 21 L27 7 L24 4 L13 15 L8 10 L8 10 L8 10 L8 10Z",
+  check: "M5 13 L13 21 L27 7 L24 4 L13 15 L8 10 L5 13 L5 13 L5 13 L5 13Z",
 };
 
 const SvgMorphSection = () => {
@@ -56,9 +56,9 @@ const SvgMorphSection = () => {
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
           Transformamos ideias em soluções, conectando estratégia e tecnologia.
         </p>
-        <div className="mt-12 flex h-[150px] w-[200px] items-center justify-center">
+        <div className="mt-12 flex h-[150px] w-[150px] items-center justify-center">
           <svg
-            viewBox="0 -10 32 45"
+            viewBox="0 0 32 32"
             preserveAspectRatio="xMidYMid meet"
             className="h-full w-full"
             xmlns="http://www.w3.org/2000/svg"
