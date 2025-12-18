@@ -5,11 +5,12 @@ import { gsap } from 'gsap';
 
 // Paths with the same number of points for smooth morphing
 const paths = {
-  h: "M5 25 V0 H10 V11 H22 V0 H27 V25 H22 V14 H10 V25 H5Z",
-  data: "M16 0 L27 12.5 L16 25 L5 12.5 L16 0 L16 0 L16 0 L16 0 L16 0Z",
-  star: "M16 0 L19 8 L27 9 L21 15 L22.5 24 L16 20 L9.5 24 L11 15 L5 9 L14 8Z",
-  check: "M5 13 L13 21 L27 7 L24 4 L13 15 L8 10 L5 13 L5 13 L5 13 L5 13Z",
+  h: "M5 25V0h5v11h12V0h5v25h-5V14H10v11H5z",
+  data: "M16 0L27 12.5L16 25L5 12.5L16 0z M16 0L16 0L16 0L16 0L16 0z",
+  star: "M16 0l4.9 10.1 11.1 1.6-8 7.8 1.9 11-10-5.2-10 5.2 1.9-11-8-7.8 11.1-1.6L16 0z",
+  check: "M5 13l-3-3 5.1-5.1L13 10.8l12-12 5.1 5.1-17.1 17.1L5 13z",
 };
+
 
 const SvgMorphSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -20,7 +21,7 @@ const SvgMorphSection = () => {
 
     gsap.set(morphPathRef.current, {
       transformOrigin: 'center center',
-      scale: 2.5,
+      scale: 1.5,
     });
 
     const tl = gsap.timeline({
@@ -58,7 +59,7 @@ const SvgMorphSection = () => {
         </p>
         <div className="mt-12 flex h-[150px] w-[150px] items-center justify-center">
           <svg
-            viewBox="0 0 32 32"
+            viewBox="-2 -2 36 36"
             preserveAspectRatio="xMidYMid meet"
             className="h-full w-full"
             xmlns="http://www.w3.org/2000/svg"
