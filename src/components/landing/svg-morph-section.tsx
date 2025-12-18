@@ -5,10 +5,10 @@ import { gsap } from 'gsap';
 
 // Paths with the same number of points for smooth morphing
 const paths = {
-  h: "M0 25 V0 H5 V11 H17 V0 H22 V25 H17 V14 H5 V25 H0Z",
-  data: "M11 0 L22 12.5 L11 25 L0 12.5 L0 12.5 L0 12.5 L0 12.5 L0 12.5Z",
-  star: "M11 0 L14 8 L22 9 L16 15 L17.5 24 L11 20 L4.5 24 L6 15 L0 9 L9 8Z",
-  check: "M0 13 L8 21 L22 7 L19 4 L8 15 L3 10 L3 10 L3 10 L3 10Z",
+  h: "M5 25 V0 H10 V11 H22 V0 H27 V25 H22 V14 H10 V25 H5Z",
+  data: "M16 0 L27 12.5 L16 25 L5 12.5 L5 12.5 L5 12.5 L5 12.5 L5 12.5Z",
+  star: "M16 0 L19 8 L27 9 L21 15 L22.5 24 L16 20 L9.5 24 L11 15 L5 9 L14 8Z",
+  check: "M5 13 L13 21 L27 7 L24 4 L13 15 L8 10 L8 10 L8 10 L8 10Z",
 };
 
 const SvgMorphSection = () => {
@@ -58,13 +58,14 @@ const SvgMorphSection = () => {
         </p>
         <div className="mt-12 flex h-[150px] w-[200px] items-center justify-center">
           <svg
-            viewBox="-5 -5 32 35"
+            viewBox="0 -10 32 45"
+            preserveAspectRatio="xMidYMid meet"
             className="h-full w-full"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
               ref={morphPathRef}
-              d={paths.check} 
+              d={paths.check}
               fill="hsl(var(--accent))"
             />
           </svg>
