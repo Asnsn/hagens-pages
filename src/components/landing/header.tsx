@@ -5,14 +5,12 @@ import Link from 'next/link';
 import { Menu, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { HagensLogo } from './hagens-logo';
 import { gsap } from 'gsap';
 import { useTransitionContext } from '@/context/TransitionContext';
 
 const navLinks = [
-  { href: '#servicos', label: 'Serviços / Produtos' },
+  { href: '#servicos', label: 'Serviços' },
   { href: '#sobre', label: 'Sobre' },
-  { href: '/artigos', label: 'Artigos' },
   { href: '#contato', label: 'Contatos' },
 ];
 
@@ -96,7 +94,11 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-background/95 backdrop-blur-sm">
       <div className="container mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2" onClick={(e) => handleLinkClick(e, '/')}>
-          <HagensLogo className="h-7" />
+          <div className="text-2xl font-bold">
+            <span>Control </span>
+            <span className="text-accent">Alt</span>
+            <span> Dev</span>
+          </div>
         </Link>
 
         <nav ref={navRef} className="hidden items-center gap-8 md:flex">
@@ -134,7 +136,11 @@ export default function Header() {
                     handleMobileLinkClick('/');
                   }}
                 >
-                  <HagensLogo className="h-7" />
+                  <div className="text-2xl font-bold">
+                    <span>Control </span>
+                    <span className="text-accent">Alt</span>
+                    <span> Dev</span>
+                  </div>
                 </a>
                 <nav className="flex flex-col gap-4">
                   {navLinks.map(link => (

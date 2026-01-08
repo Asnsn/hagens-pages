@@ -46,87 +46,46 @@ const DeliverIcon = () => (
     </svg>
 );
 
-
-const YouTubeVideo = () => (
-    <motion.div 
-        className="relative aspect-video w-full max-w-2xl overflow-hidden rounded-lg bg-black shadow-2xl"
-        initial={{ opacity: 0, scale: 0.9 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.7, delay: 0.5 }}
-    >
-        <iframe
-            className="absolute top-0 left-0 h-full w-full"
-            src="https://www.youtube.com/embed/gkwMIucVTPk?autoplay=1&mute=1&loop=1&playlist=gkwMIucVTPk&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1"
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            loading="lazy"
-        ></iframe>
-    </motion.div>
-);
-
 export default function Hero() {
   
-  useEffect(() => {
-    gsap.fromTo('.tbd-item', 
-      { opacity: 0, y: 50 },
-      { 
-        opacity: 1, 
-        y: 0, 
-        stagger: 0.3,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.tbd-container',
-          start: 'top 80%',
-          toggleActions: 'play none none none',
-        }
-      }
-    );
-  }, []);
-
   return (
     <section className="relative">
       <div className="container relative z-10 mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <div className="text-center lg:text-left">
              <TextScramble
-              phrases={['Think.', 'Build.', 'Deliver.']}
+              phrases={['Automate.', 'Integrate.', 'Accelerate.']}
               className="font-headline text-5xl font-extrabold tracking-tight text-white sm:text-6xl md:text-7xl"
             />
             <p className="mt-6 text-lg text-muted-foreground sm:max-w-xl md:text-xl mx-auto lg:mx-0">
-              Inteligência de dados, criatividade e tecnologia para construir
-              soluções inovadoras em cada etapa da jornada do cliente.
+              Automação com Inteligência Artificial e desenvolvimento de sistemas para transformar suas operações e impulsionar o futuro do seu negócio.
             </p>
             <div className="mt-10 space-y-8 tbd-container">
               <ThinkBuildDeliverItem
                 icon={<ThinkIcon />}
-                title="THINK"
-                description="Mapeamos a jornada de consumo, apoiados em inovação, design e análise de tendências de mercado."
+                title="AUTOMATE"
+                description="Analisamos seus processos e identificamos oportunidades para automação inteligente, otimizando o fluxo de trabalho."
                 color="#F923C7" // Magenta
                 className="tbd-item"
               />
               <ThinkBuildDeliverItem
                 icon={<BuildIcon />}
-                title="BUILD"
-                description="Construímos soluções personalizadas e adaptadas a cada desafio e às necessidades do cliente."
+                title="INTEGRATE"
+                description="Desenvolvemos e integramos sistemas e I.A.s para criar uma infraestrutura tecnológica coesa e eficiente."
                 color="#0CF22C" // Green
                 className="tbd-item"
               />
               <ThinkBuildDeliverItem
                 icon={<DeliverIcon />}
-                title="DELIVER"
-                description="Colocamos em prática as soluções desenvolvidas, monitorando indicadores-chaves e ajustando continuamente para assegurar impacto e valor sustentáveis."
+                title="ACCELERATE"
+                description="Implementamos as soluções para acelerar seu crescimento, garantindo performance, escalabilidade e resultados mensuráveis."
                 color="#02A6F8" // Blue
                 className="tbd-item"
               />
             </div>
           </div>
           
-          <div className="flex items-center justify-center">
-            <YouTubeVideo />
+          <div className="relative h-[500px] w-full">
           </div>
         </div>
       </div>

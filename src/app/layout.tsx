@@ -1,14 +1,14 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
-import CursorFollower from '@/components/landing/cursor-follower';
 import { TransitionProvider } from '@/context/TransitionContext';
 import PageTransition from '@/components/landing/page-transition';
+import FloatingWhatsAppButton from '@/components/landing/floating-whatsapp-button';
 
 export const metadata: Metadata = {
-  title: 'Hagens | Think, Build, Deliver.',
+  title: 'Control Alt Dev | Automate, Integrate, Accelerate.',
   description:
-    'Hagens - Inteligência de dados, criatividade e tecnologia para construir soluções inovadoras.',
+    'Control Alt Dev - Automação com Inteligência Artificial e desenvolvimento de sistemas para transformar suas operações e impulsionar o futuro do seu negócio.',
 };
 
 export default function RootLayout({
@@ -32,10 +32,10 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased text-foreground">
         <TransitionProvider>
-          <CursorFollower />
           <PageTransition />
           {children}
           <Toaster />
+          <FloatingWhatsAppButton />
         </TransitionProvider>
       </body>
     </html>

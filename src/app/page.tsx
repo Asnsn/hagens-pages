@@ -2,10 +2,8 @@
 
 import Header from '@/components/landing/header';
 import Hero from '@/components/landing/hero';
-import ClientShowcase from '@/components/landing/client-showcase';
 import Footer from '@/components/landing/footer';
 import AnimatedSection from '@/components/landing/animated-section';
-import HorizontalScrollGallery from '@/components/landing/horizontal-scroll-gallery';
 import ConnectionParticles from '@/components/landing/connection-particles';
 import SvgMorphSection from '@/components/landing/svg-morph-section';
 import {
@@ -14,10 +12,11 @@ import {
   TrendingUp,
   Mail,
   Phone,
-  MapPin,
 } from 'lucide-react';
 import Image from 'next/image';
 import ContactForm from '@/components/landing/contact-form';
+import CustomCursor from '@/components/landing/custom-cursor';
+import CTASection from '@/components/landing/cta-section';
 
 const ServiceCard = ({ icon, title, description, delay }) => {
   return (
@@ -33,11 +32,11 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col">
+      <CustomCursor />
       <ConnectionParticles />
       <Header />
       <main className="flex-grow">
         <Hero />
-        <HorizontalScrollGallery id="work" />
         <SvgMorphSection />
 
         <AnimatedSection id="servicos" className="py-16 sm:py-24 bg-background">
@@ -46,26 +45,25 @@ export default function Home() {
               Serviços / Produtos
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-              Soluções completas que unem dados, criatividade e tecnologia para
-              impulsionar seu negócio.
+              Soluções de automação com I.A. e programação de sistemas para otimizar seu negócio.
             </p>
             <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
               <ServiceCard
                 icon={<BrainCircuit size={40} />}
-                title="Data Intelligence"
-                description="Transformamos dados brutos em insights estratégicos para otimizar suas decisões e encontrar novas oportunidades de mercado."
+                title="Automação com I.A."
+                description="Implementamos soluções de inteligência artificial para automatizar processos e otimizar a tomada de decisões."
                 delay={0}
               />
               <ServiceCard
                 icon={<Paintbrush size={40} />}
-                title="Creative Tech"
-                description="Unimos design e tecnologia para criar experiências de marca memoráveis, desde sites interativos a aplicativos inovadores."
+                title="Desenvolvimento de Sistemas"
+                description="Criamos sistemas personalizados e escaláveis para atender às necessidades específicas do seu negócio."
                 delay={0.2}
               />
               <ServiceCard
                 icon={<TrendingUp size={40} />}
-                title="Performance & Growth"
-                description="Utilizamos automação e marketing de precisão para escalar suas operações, aumentar a conversão e acelerar o crescimento."
+                title="Otimização de Processos"
+                description="Analisamos e otimizamos seus fluxos de trabalho para aumentar a eficiência e reduzir custos."
                 delay={0.4}
               />
             </div>
@@ -80,33 +78,26 @@ export default function Home() {
                   Sobre Nós
                 </h2>
                 <p className="mt-4 text-lg text-muted-foreground">
-                  Somos uma consultoria de inovação e tecnologia que une
-                  inteligência de dados, criatividade e performance para
-                  construir o futuro das marcas. Nascemos da crença de que a
-                  tecnologia, quando alinhada a uma estratégia humana, tem o
-                  poder de criar conexões genuínas e resultados
-                  extraordinários.
+                  Somos a Control Alt Dev, uma agência de automação com I.A. e programação de sistemas. Acreditamos que a tecnologia é a chave para transformar negócios e impulsionar o crescimento.
                 </p>
                 <p className="mt-4 text-muted-foreground">
-                  Nossa equipe é formada por especialistas multidisciplinares —
-                  estrategistas, designers, engenheiros e analistas —
-                  apaixonados por resolver desafios complexos e entregar valor
-                  sustentável para nossos clientes.
+                  Nossa equipe de especialistas é apaixonada por resolver desafios complexos e entregar soluções inovadoras e de alto impacto para nossos clientes.
                 </p>
               </div>
               <div className="relative h-80 w-full overflow-hidden rounded-lg shadow-lg lg:h-96">
                 <Image
-                  src="/logos/sobre-nos.webp"
-                  alt="Imagem do escritório da Hagens, mostrando um ambiente moderno com divisórias de vidro."
+                  src="/logos/logocntrldev.png"
+                  alt="Logo da Control Alt Dev"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  data-ai-hint="office workspace"
                   className="object-cover"
                 />
               </div>
             </div>
           </div>
         </AnimatedSection>
+
+        <CTASection />
 
         <AnimatedSection id="contato" className="py-16 sm:py-24 bg-background">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -126,26 +117,16 @@ export default function Home() {
               <div className="flex flex-col gap-8 text-center lg:text-left">
                 <div>
                   <h3 className="flex items-center justify-center lg:justify-start gap-3 font-headline text-xl font-bold">
-                    <MapPin className="text-accent" /> Endereço
-                  </h3>
-                  <p className="mt-2 text-muted-foreground">
-                    Av. José de Sousa Campos, 575 <br />
-                    Sl. 504/505 – Cambuí <br />
-                    Campinas – SP, CEP 13025-320
-                  </p>
-                </div>
-                <div>
-                  <h3 className="flex items-center justify-center lg:justify-start gap-3 font-headline text-xl font-bold">
                     <Phone className="text-accent" /> Telefone
                   </h3>
-                  <p className="mt-2 text-muted-foreground">(19) 99832-0494</p>
+                  <p className="mt-2 text-muted-foreground">(19) 98283-6686</p>
                 </div>
                 <div>
                   <h3 className="flex items-center justify-center lg:justify-start gap-3 font-headline text-xl font-bold">
                     <Mail className="text-accent" /> Email
                   </h3>
                   <p className="mt-2 text-muted-foreground">
-                    contato@hagens.com.br
+                    controldev@controlaltdev.com
                   </p>
                 </div>
               </div>
@@ -153,9 +134,6 @@ export default function Home() {
           </div>
         </AnimatedSection>
 
-        <AnimatedSection id="clientes">
-          <ClientShowcase />
-        </AnimatedSection>
       </main>
       <Footer />
     </div>

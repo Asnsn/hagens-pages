@@ -1,7 +1,5 @@
 import Link from 'next/link';
 import { Youtube, Instagram, Linkedin, Facebook } from 'lucide-react';
-import { HagensLogoFooter } from './hagens-logo-footer';
-import { PartnerLogos } from './partner-logos';
 
 export default function Footer() {
   return (
@@ -9,16 +7,14 @@ export default function Footer() {
       <div className="container mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-12">
           <div className="md:col-span-4">
-            <HagensLogoFooter className="h-auto w-48" />
-            <div className="mt-8">
-              <p className="font-bold">Campinas – SP</p>
-              <p>Av. José de Sousa Campos, 575</p>
-              <p>Sl. 504/505 – Cambuí</p>
-              <p>CEP 13025-320</p>
+            <div className="text-2xl font-bold">
+              <span>Control </span>
+              <span className="text-accent">Alt</span>
+              <span> Dev</span>
             </div>
             <div className="mt-6">
               <p className="font-bold">Telefone</p>
-              <p>(19) 99832-0494</p>
+              <p>(19) 98283-6686</p>
             </div>
           </div>
 
@@ -36,7 +32,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="https://www.instagram.com/houseofhagens/"
+                  href="#"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 hover:underline"
@@ -66,14 +62,11 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="md:col-span-6">
-            <PartnerLogos />
-          </div>
         </div>
       </div>
       <div className="border-t border-black/20 py-4">
         <p className="text-center text-sm">
-          © HAGENS {new Date().getFullYear()}
+          © Control Alt Dev {new Date().getFullYear()}
         </p>
       </div>
     </footer>
