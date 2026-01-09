@@ -19,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning className="dark">
       <head>
+        <link rel="icon" href="/logos/logocntrldev.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
