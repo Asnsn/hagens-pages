@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Projeto 1",
+    "description": "Descrição do projeto 1. Detalhes sobre a parceria e as tecnologias utilizadas.",
+    "imageUrl": "/logos/loccitane.svg",
+    "link": "#"
+  },
+  {
+    "title": "Projeto 2",
+    "description": "Descrição do projeto 2. Detalhes sobre a parceria e as tecnologias utilizadas.",
+    "imageUrl": "/logos/vivara.svg",
+    "link": "#"
+  },
+  {
+    "title": "Projeto 3",
+    "description": "Descrição do projeto 3. Detalhes sobre a parceria e as tecnologias utilizadas.",
+    "imageUrl": "/logos/chilli-beans.svg",
+    "link": "#"
+  },
+  {
+    "title": "Projeto 4",
+    "description": "Descrição do projeto 4. Detalhes sobre a parceria e as tecnologias utilizadas.",
+    "imageUrl": "/logos/arezzo.svg",
+    "link": "#"
+  }
+]

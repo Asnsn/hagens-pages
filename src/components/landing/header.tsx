@@ -10,6 +10,7 @@ import { useTransitionContext } from '@/context/TransitionContext';
 
 const navLinks = [
   { href: '#servicos', label: 'Serviços' },
+  { href: '/portfolio', label: 'Portfólio' },
   { href: '#sobre', label: 'Sobre' },
   { href: '#contato', label: 'Contatos' },
 ];
